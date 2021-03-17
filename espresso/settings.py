@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    'homepage.apps.HomepageConfig',
+    'coffee_intake.apps.CoffeeIntakeConfig',
+    'dry_coffee.apps.DryCoffeeConfig',
     'beans_intake.apps.BeansIntakeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +59,9 @@ ROOT_URLCONF = 'espresso.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
