@@ -1,0 +1,23 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+<h1> own intake </h1>
+
+<form method="POST" enctype="multipart/form-data" class="form">
+    <div class="container-fluid">
+        <div class="col-md-5">
+            <div class="form-group">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+{% endblock %}
