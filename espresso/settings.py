@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
+    'jsignature',
     'homepage.apps.HomepageConfig',
     'coffee_intake.apps.CoffeeIntakeConfig',
     'dry_coffee.apps.DryCoffeeConfig',
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# settings.py
+JSIGNATURE_WIDTH = 400
+JSIGNATURE_HEIGHT = 150
