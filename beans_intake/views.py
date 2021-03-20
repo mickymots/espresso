@@ -6,7 +6,7 @@ from django.template import loader
 from jsignature.utils import draw_signature
 
 from .forms.own_intake_form import OwnIntakeForm
-from .models import OwnIntake
+from .models import OwnIntake, Location
 
 def index(request):
     template = loader.get_template('beans_intake/index.html')
@@ -35,7 +35,7 @@ def own_intake(request):
             file_name = handle_uploaded_file(request.FILES["proof_file"])
             
             intake_data = OwnIntake(name= intake_form.cleaned_data['name'], #name,
-                                    lot_detail = intake_form.cleaned_data['lot_detail'],
+                                    lot_location = intake_form.cleaned_data['lot_location'],
                                     
                                     box_count = intake_form.cleaned_data['box_count'],
                                     discarded_weight = intake_form.cleaned_data['discarded_weight'],
@@ -45,8 +45,10 @@ def own_intake(request):
                                     )
             
             intake_data.save()
+            
             context['message'] = "Intake saved."
-    
+        else:
+            print(intake_form)
     # Create new form
     intake_form = OwnIntakeForm() 
     context['form'] =  intake_form

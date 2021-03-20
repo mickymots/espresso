@@ -2,14 +2,15 @@ from django import forms
 
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget
+from beans_intake.models import Location, OwnIntake
 
-class OwnIntakeForm(forms.Form): 
+class OwnIntakeForm(forms.ModelForm): 
+
     name = forms.CharField(label="name",
                            widget=forms.TextInput(attrs={'class': 'form-control'}) )
 
-    lot_detail = forms.CharField(label="Select lot",
-                                  widget=forms.TextInput(attrs={'class': 'form-control'}) )
-   
+    lot_location = forms.ModelChoiceField(label="Select lot",
+                                 queryset=Location.objects.all() , widget=forms.Select(attrs={'class':'form-control'}))
 
     box_count= forms.IntegerField(label="Number of Boxes",
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
@@ -28,3 +29,9 @@ class OwnIntakeForm(forms.Form):
 
     
     signature = JSignatureField(label="Signature")
+
+    class Meta:
+        model = OwnIntake
+        fields = [
+                "name", "lot_location", "box_count", "discarded_weight", "refloated_weight", "proof_file", "signature"
+        ]
