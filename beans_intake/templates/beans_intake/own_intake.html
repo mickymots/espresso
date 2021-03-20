@@ -8,17 +8,19 @@
 <form method="post" enctype="multipart/form-data" class="form">
     <div class="container-fluid">
         <div class="col-md-5">
+
+            {% if message %}
             <div class="alert alert-success" role="alert">
                 {{message}}
-              </div>
-
+            </div>
+            {% endif %}
             <div class="form-group">
-                
-               
+
+
                 {{ form }}
-                
-                <!-- <input type="cancel" value="Cancel" class="btn btn-outline-secondary"> -->
-                 <p></p>
+
+                <input type="reset" value="Cancel" class="btn btn-outline-secondary">
+               
                 <input type="submit" value="Submit" class="btn  btn-primary">
                 {% csrf_token %}
             </div>
