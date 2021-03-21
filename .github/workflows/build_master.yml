@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Echo variable
-        run: echo '${{github.GITHUB_REPOSITORY}} -  ${{github.GITHUB_REF}}'
+        run: echo '${{github.ref}} -  ${{github.repository}}'
       
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag '${{github.GITHUB_REPOSITORY}}:${{github.GITHUB_REF}}'
