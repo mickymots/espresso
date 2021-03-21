@@ -47,8 +47,10 @@ def own_intake(request):
             intake_data.save()
             
             context['message'] = "Intake saved."
+            return render(request, 'beans_intake/index.html' , context)
         else:
-            print(intake_form)
+            context['message'] = "Intake Failed."
+            context['error'] = True
     # Create new form
     intake_form = OwnIntakeForm() 
     context['form'] =  intake_form

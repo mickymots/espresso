@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import OwnIntake, Location, Batch
+admin.site.register(Batch)
+admin.site.register(OwnIntake)
+admin.site.register(Location)

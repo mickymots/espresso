@@ -22,3 +22,8 @@ class OwnIntake(models.Model):
     signature = JSignatureField()
     created_date = models.DateField(default=timezone.now)
     
+
+class Batch(models.Model):
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
+    created_date = models.DateField(default=timezone.now)
+    intake = models.ForeignKey(OwnIntake, on_delete=models.CASCADE, null=True)
