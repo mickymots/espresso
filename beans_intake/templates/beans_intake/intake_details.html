@@ -1,0 +1,85 @@
+{% extends "homepage/base_template.html" %}
+{% load jsignature_filters %}
+
+
+{% block content %}
+<h1> Oubu Coffee - Intake Details </h1>
+
+<p> </p>
+<p> </p>
+
+{% if message %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endif %}
+
+
+<fieldset disabled>
+    <div class="row g-3">
+        <legend>Intake Details {{intake.id}}</legend>
+
+        <div class="row">
+
+            <div class="col">
+                <label for="name">Supervisor Name</label>
+                <input type="text" class="form-control" value="{{intake.name}}" placeholder="Supervisor name" id="name"  aria-label="Supervisor name"/>
+            </div>
+            <div class="col">
+                <label for="Location">Location</label>
+                <input type="text" class="form-control" value="{{intake.lot_location}}" placeholder="Location" id="Location"
+                    aria-label="Location">
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col">
+                <label for="intake_date">Intake Date</label>
+                <input type="text" class="form-control" value="{{intake.created_date}}" placeholder="Intake Date" id="intake_date"
+                    aria-label="Intake Date">
+            </div>
+            <div class="col">
+                <label for="box_count">Box Count </label>
+                <input type="text" class="form-control" value="{{intake.box_count}}" placeholder="Box Count" id="box_count"
+                    aria-label="Box Count">
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col">
+                <label for="refloated_weight">Refloated Weight </label>
+                <input type="text" class="form-control" value="{{intake.refloated_weight}}" placeholder="Box Count" id="refloated_weight"
+                    aria-label="Box Count">
+
+            </div>
+
+            <div class="col">
+                <label for="discarded_weight">Discarded Weight </label>
+                <input type="text" class="form-control" value="{{intake.discarded_weight}}" placeholder="Box Count" id="discarded_weight"
+                    aria-label="Box Count">
+
+            </div>
+        </div>
+
+        <p></p>
+
+        <div class="row">
+            <div class="col">
+                <label for="signature">Supervisor Sign</label>
+                <span>
+                    <img class="img-fluid img-thumbnail rounded d-block" id="signature" src="{{ intake.signature|signature_base64 }}" height="50" width="250"
+                        alt="Supervisor signature" />
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+</fieldset>
+
+
+{% endblock %}

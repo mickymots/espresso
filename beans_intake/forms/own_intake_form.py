@@ -6,10 +6,10 @@ from beans_intake.models import Location, OwnIntake
 
 class OwnIntakeForm(forms.ModelForm): 
 
-    name = forms.CharField(label="name",
+    name = forms.CharField(label="Supervisor Name",
                            widget=forms.TextInput(attrs={'class': 'form-control'}) )
 
-    lot_location = forms.ModelChoiceField(label="Select lot",
+    lot_location = forms.ModelChoiceField(label="Select lot location",
                                  queryset=Location.objects.all() , widget=forms.Select(attrs={'class':'form-control'}))
 
     box_count= forms.IntegerField(label="Number of Boxes",

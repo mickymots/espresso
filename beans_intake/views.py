@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+
 from django.template import loader
 from jsignature.utils import draw_signature
 
@@ -25,7 +26,6 @@ def handle_uploaded_file(f):
 
 
 def own_intake(request):
-   
     context = { }
     intake_form = None
     if request.POST: 
@@ -34,7 +34,7 @@ def own_intake(request):
            
             file_name = handle_uploaded_file(request.FILES["proof_file"])
             
-            intake_data = OwnIntake(name= intake_form.cleaned_data['name'], #name,
+            intake = OwnIntake(name= intake_form.cleaned_data['name'], #name,
                                     lot_location = intake_form.cleaned_data['lot_location'],
                                     
                                     box_count = intake_form.cleaned_data['box_count'],
@@ -44,10 +44,13 @@ def own_intake(request):
                                     signature = intake_form.cleaned_data['signature']
                                     )
             
-            intake_data.save()
+            intake.save()
             
+            intake = OwnIntake.objects.get(pk=intake.id)
             context['message'] = "Intake saved."
-            return render(request, 'beans_intake/index.html' , context)
+            context['intake'] = intake
+            
+            return render(request, f'beans_intake/intake_details.html/' , context)
         else:
             context['message'] = "Intake Failed."
             context['error'] = True
@@ -57,6 +60,18 @@ def own_intake(request):
     
     return render(request, 'beans_intake/own_intake.html' , context)
 
+
+# Show Intake details
+def get_intake_details(request, intake_id):
+    # intake_id = request.GET.get("intake_id")
+    print(request)
+    # if request.GET: 
+
+    try:
+        intake = OwnIntake.objects.get(pk=intake_id)
+    except OwnIntake.DoesNotExist:
+        raise Http404("Intake does not exist")
+    return render(request, 'beans_intake/intake_details.html', {'intake': intake})
 
 
 def suppliers_intake(request):
