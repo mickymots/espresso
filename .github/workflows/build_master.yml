@@ -19,8 +19,11 @@ jobs:
       - name: Echo variable
         run: echo '${{github.ref}} -  ${{github.repository}}'
       
-      - name: Echo variable
+      - name: change into soruce dir
         run: cd src
+
+      - name: print working dir
+        run: pwd
       
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag '${{github.repository}}:${{github.sha}}' --tag '${{github.repository}}:latest'
