@@ -18,3 +18,6 @@ docker-compose -f docker-compose.yml --env-file=dev.env up -d
    * python manage.py sqlmigrate beans_intake 0001
    * python manage.py migrate
 
+# Static file
+
+   * docker exec espresso-web /bin/sh -c "python manage.py collectstatic --noinput"

@@ -25,7 +25,7 @@ SECRET_KEY = 'i^_&k@nc9!&4vyeas#51tm4)g+6=ovs055ss63p4@3)+!m0del'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '35.182.244.107']
+ALLOWED_HOSTS = ['web']
 
 
 # Application definition
@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
+    'django.contrib.staticfiles', 
 ]
 
 MIDDLEWARE = [
@@ -128,9 +127,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+# STATIC_URL = '/code/static/'      # current deployed
 STATIC_URL = '/static/'
-
+STATIC_ROOT=os.path.join(BASE_DIR, "static") 
 
 # settings.py
 JSIGNATURE_WIDTH = 400

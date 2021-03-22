@@ -1,16 +1,33 @@
 version: "3.1"
 services:
+
+  nginx:
+    image: nginx:latest
+    container_name: espresso
+    ports:
+       - "80:80"
+    volumes:
+       - espresso_web:/static  # for syncing with django source code
+       - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
+
   web:
     container_name: espresso-web
     hostname: espresso-web
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    build: 
+      context: src
+      dockerfile: Dockerfile
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn espresso.wsgi -b 0.0.0.0:8000"
+    image: gabbarsingh/obou-coffee:1.2
     volumes:
-      - .:/code
-    ports:
-      - "80:8000"
+      - ./src:/code               #for development
+      - espresso_web:/static     #for production
+
     depends_on:
       - db
+    environment:
+        - DJANGO_PRODUCTION=1
 
   db:
     image: postgres:10-alpine
@@ -37,3 +54,4 @@ services:
 
 volumes: 
   pgdata:
+  espresso_web:
