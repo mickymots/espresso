@@ -19,5 +19,8 @@ jobs:
       - name: Echo variable
         run: echo '${{github.ref}} -  ${{github.repository}}'
       
+      - name: Echo variable
+        run: cd src
+      
       - name: Build the Docker image
-        run: docker build ./src --file Dockerfile --tag '${{github.repository}}:${{github.sha}}' --tag '${{github.repository}}:latest'
+        run: docker build . --file Dockerfile --tag '${{github.repository}}:${{github.sha}}' --tag '${{github.repository}}:latest'
