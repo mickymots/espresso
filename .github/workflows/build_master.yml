@@ -20,4 +20,5 @@ jobs:
         run: echo '${{github.ref}} -  ${{github.repository}}'
       
       - name: Build the Docker image
+        working-directory: ./src
         run: docker build . --file Dockerfile --tag '${{github.repository}}:${{github.sha}}' --tag '${{github.repository}}:latest'

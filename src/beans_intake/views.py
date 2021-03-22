@@ -63,10 +63,6 @@ def own_intake(request):
 
 # Show Intake details
 def get_intake_details(request, intake_id):
-    # intake_id = request.GET.get("intake_id")
-    print(request)
-    # if request.GET: 
-
     try:
         intake = OwnIntake.objects.get(pk=intake_id)
     except OwnIntake.DoesNotExist:
