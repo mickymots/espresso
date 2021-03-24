@@ -17,6 +17,9 @@ docker-compose -f docker-compose.yml --env-file=dev.env up -d
    * python manage.py makemigrations beans_intake
    * python manage.py sqlmigrate beans_intake 0001
    * python manage.py migrate
+   * migrations.RunSQL(
+   *    'ALTER SEQUENCE beans_intake_location_id_seq RESTART WITH 10000;'
+   * )
 
 # Static file
 

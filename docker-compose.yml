@@ -46,7 +46,6 @@ services:
     image: adminer
     container_name: espresso-db-client
     hostname: espresso-db-client
-    restart: always
     depends_on:
       - db
     ports:

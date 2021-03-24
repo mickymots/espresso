@@ -7,7 +7,7 @@ from django.template import loader
 from jsignature.utils import draw_signature
 
 from .forms.own_intake_form import OwnIntakeForm
-from .models import OwnIntake, Location
+from .models import Intake, Location
 
 def index(request):
     template = loader.get_template('beans_intake/index.html')
@@ -33,20 +33,25 @@ def own_intake(request):
         if intake_form.is_valid(): 
            
             file_name = handle_uploaded_file(request.FILES["proof_file"])
-            
-            intake = OwnIntake(name= intake_form.cleaned_data['name'], #name,
-                                    lot_location = intake_form.cleaned_data['lot_location'],
-                                    
-                                    box_count = intake_form.cleaned_data['box_count'],
-                                    discarded_weight = intake_form.cleaned_data['discarded_weight'],
-                                    refloated_weight = intake_form.cleaned_data['refloated_weight'],
-                                    proof_file = file_name,
-                                    signature = intake_form.cleaned_data['signature']
-                                    )
+            print(intake_form)
+            intake = Intake(supervisor_name= intake_form.cleaned_data['supervisor_name'], #name,
+                            lot_location = intake_form.cleaned_data['lot_location'],
+                            box_count = intake_form.cleaned_data['box_count'],
+                            total_weight = intake_form.cleaned_data['total_weight'],
+                            discarded_weight = intake_form.cleaned_data['discarded_weight'],
+                            refloated_weight = intake_form.cleaned_data['refloated_weight'],
+                            proof_file = file_name,
+                            supervisor_signature = intake_form.cleaned_data['supervisor_signature'],
+                            representative_name = '',
+                            representative_signature = ''
+                            
+                            )
             
             intake.save()
             
-            intake = OwnIntake.objects.get(pk=intake.id)
+            intake = Intake.objects.get(pk=intake.id)
+            print(intake)
+
             context['message'] = "Intake saved."
             context['intake'] = intake
             
@@ -64,8 +69,8 @@ def own_intake(request):
 # Show Intake details
 def get_intake_details(request, intake_id):
     try:
-        intake = OwnIntake.objects.get(pk=intake_id)
-    except OwnIntake.DoesNotExist:
+        intake = Intake.objects.get(pk=intake_id)
+    except Intake.DoesNotExist:
         raise Http404("Intake does not exist")
     return render(request, 'beans_intake/intake_details.html', {'intake': intake})
 

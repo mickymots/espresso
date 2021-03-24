@@ -23,7 +23,7 @@
 
             <div class="col">
                 <label for="name">Supervisor Name</label>
-                <input type="text" class="form-control" value="{{intake.name}}" placeholder="Supervisor name" id="name"  aria-label="Supervisor name"/>
+                <input type="text" class="form-control" value="{{intake.supervisor_name}}" placeholder="Supervisor name" id="name"  aria-label="Supervisor name"/>
             </div>
             <div class="col">
                 <label for="Location">Location</label>
@@ -47,6 +47,22 @@
             </div>
         </div>
 
+        <div class="row">
+
+            <div class="col">
+                <label for="total_weight">Total Weight </label>
+                <input type="text" class="form-control" value="{{intake.total_weight}}" placeholder="Total Weight" id="total_weight"
+                    aria-label="Total Weight">
+
+            </div>
+
+            <div class="col">
+                <label for="discarded_weight">Discarded Weight </label>
+                <input type="text" class="form-control" value="{{intake.discarded_weight}}" placeholder="Box Count" id="discarded_weight"
+                    aria-label="Discarded Weight">
+
+            </div>
+        </div>
 
         <div class="row">
 
@@ -58,10 +74,21 @@
             </div>
 
             <div class="col">
-                <label for="discarded_weight">Discarded Weight </label>
-                <input type="text" class="form-control" value="{{intake.discarded_weight}}" placeholder="Box Count" id="discarded_weight"
-                    aria-label="Box Count">
+                &nbsp;
 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {% if intake.is_external %}
+                <input type="checkbox" class="form-check-input" checked="{{intake.is_external }}" placeholder="" id="is_external"
+                    aria-label="is external">
+                {%else%}
+                <input type="checkbox" class="form-check-input"  placeholder="" id="is_external"
+                aria-label="is external">
+                {% endif %}
+                <label class="form-check-label" for="exampleCheck1">External Supplier? </label>
             </div>
         </div>
 
@@ -71,7 +98,7 @@
             <div class="col">
                 <label for="signature">Supervisor Sign</label>
                 <span>
-                    <img class="img-fluid img-thumbnail rounded d-block" id="signature" src="{{ intake.signature|signature_base64 }}" height="50" width="250"
+                    <img class="img-fluid img-thumbnail rounded d-block" id="signature" src="{{ intake.supervisor_signature|signature_base64 }}" height="50" width="250"
                         alt="Supervisor signature" />
                 </span>
             </div>

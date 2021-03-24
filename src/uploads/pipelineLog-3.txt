@@ -1,0 +1,89 @@
++ umask 000
+
++ GIT_LFS_SKIP_SMUDGE=1 retry 6 git clone --branch="master" --depth 50 https://x-token-auth:$REPOSITORY_OAUTH_ACCESS_TOKEN@bitbucket.org/$BITBUCKET_REPO_FULL_NAME.git $BUILD_DIR
+Cloning into '/opt/atlassian/pipelines/agent/build'...
+
++ git reset --hard 8de779b1117c3dffa19972d37a2d6c9282058456
+HEAD is now at 8de779b corrected branch specific build
+
++ git config user.name bitbucket-pipelines
+
++ git config user.email commits-noreply@bitbucket.org
+
++ git config push.default current
+
++ git config http.${BITBUCKET_GIT_HTTP_ORIGIN}.proxy http://localhost:29418/
+
++ git remote set-url origin http://bitbucket.org/$BITBUCKET_REPO_FULL_NAME
+
++ git reflog expire --expire=all --all
+
++ echo ".bitbucket/pipelines/generated" >> .git/info/exclude
+
++ chmod 777 $BUILD_DIR
+
+Artifact "*.tar": Downloading
+Artifact "*.tar": Downloaded 388.1 MiB in 6 seconds
+Artifact "*.tar": Extracting
+Artifact "*.tar": Extracted in 6 seconds
+
+Images used:
+    build : docker.io/atlassian/default-image@sha256:d8ae266b47fce4078de5d193032220e9e1fb88106d89505a120dfe41cb592a7b
++ echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+Login Succeeded
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+
++ IMAGE_NAME=$BITBUCKET_REPO_SLUG
+
++ docker load --input "${IMAGE_NAME}.tar"
+Loaded image: trsync:latest
+
++ VERSION="prod-0.1.${BITBUCKET_BUILD_NUMBER}"
+
++ IMAGE=${DOCKERHUB_NAMESPACE}/${IMAGE_NAME}
+
++ docker tag "${IMAGE_NAME}" "${IMAGE}:${VERSION}"
+
++ docker push "${IMAGE}:${VERSION}"
+The push refers to repository [docker.io/$DOCKERHUB_NAMESPACE/trsync]
+f5f1327003da: Preparing
+a1e92abceb83: Preparing
+9b20210b5ef3: Preparing
+7639c11fd8ec: Preparing
+2adb0c0b2d66: Preparing
+ea40639a150e: Preparing
+aae5a179c158: Preparing
+04d1717d0e01: Preparing
+dacb447ffe30: Preparing
+bde301416dd2: Preparing
+81496d8c72c2: Preparing
+644448d6e877: Preparing
+0e41e5bdb921: Preparing
+dacb447ffe30: Waiting
+ea40639a150e: Waiting
+aae5a179c158: Waiting
+04d1717d0e01: Waiting
+bde301416dd2: Waiting
+81496d8c72c2: Waiting
+644448d6e877: Waiting
+0e41e5bdb921: Waiting
+7639c11fd8ec: Pushed
+9b20210b5ef3: Pushed
+f5f1327003da: Pushed
+2adb0c0b2d66: Pushed
+ea40639a150e: Pushed
+04d1717d0e01: Pushed
+aae5a179c158: Pushed
+81496d8c72c2: Pushed
+644448d6e877: Pushed
+bde301416dd2: Pushed
+a1e92abceb83: Pushed
+0e41e5bdb921: Pushed
+dacb447ffe30: Pushed
+prod-0.1.3: digest: sha256:c34af590d5f816468c80b867201760ec7da78cb92623d8250269c9962b2e16e1 size: 3051
+Searching for test report files in directories named [test-results, failsafe-reports, test-reports, surefire-reports] down to a depth of 4
+Finished scanning for test reports. Found 0 test report files.
+Merged test suites, total number tests is 0, with 0 failures and 0 errors.
