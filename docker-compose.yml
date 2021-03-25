@@ -7,7 +7,8 @@ services:
     ports:
        - "80:80"
     volumes:
-       - espresso_web:/static  # for syncing with django source code
+       - espresso_web:/static
+       - espresso_uploads:/uploads  # for syncing with django source code
        - ./config/nginx:/etc/nginx/conf.d
     depends_on:
       - web
@@ -21,8 +22,9 @@ services:
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn espresso.wsgi -b 0.0.0.0:8000"
     image: gabbarsingh/obou-coffee:1.2
     volumes:
-      - ./src:/code               #for development
-      - espresso_web:/static     #for production
+      - ./src:/code               
+      - espresso_web:/static
+      - espresso_uploads:/uploads    
 
     depends_on:
       - db
@@ -54,3 +56,4 @@ services:
 volumes: 
   pgdata:
   espresso_web:
+  espresso_uploads:

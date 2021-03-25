@@ -1,5 +1,47 @@
 {% extends "homepage/base_template.html" %}
 
 {% block content %}
- <h1> Welcome to Coffee Drying </h1>
+<h1> Oubu Coffee - Coffee Drying </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Intake ID</th>
+
+            <th>Batch ID </th>
+
+            <th>Location</th>
+
+            <th>Batch Date</th>
+
+            <th>Is Second Float?</th>
+
+            <th>Batch Status</th>
+
+            <th>Batch Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in query_results %}
+        <tr>
+            <td><a href="/beans_intake/{{ item.intake.id }}"> {{item.intake.id}} </a></td>
+
+            <td>{{ item.id }}</td>
+            <td>{{ item.location }}</td>
+
+            <td>{{ item.created_date }}</td>
+            <td>{{ item.is_second_float | yesno:'Yes, No'}}</td>
+            <td>{{ item.status }}</td>
+
+            <td>
+                <a href="get_batch_details/{{item.id}}/" class="btn btn-primary btn-sm">Move to next stage </a>
+            </td>
+        </tr>
+
+
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
