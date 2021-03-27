@@ -20,7 +20,7 @@ services:
       context: src
       dockerfile: Dockerfile
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn espresso.wsgi -b 0.0.0.0:8000"
-    image: gabbarsingh/obou-coffee:1.3
+    image: gabbarsingh/obou-coffee
     volumes:
       - ./src:/code               
       - espresso_web:/static
