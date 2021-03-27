@@ -12,11 +12,11 @@ jobs:
     
     steps:
 
-      - name: Check out the repo
-        uses: actions/checkout@v2
-     
+   
       - name: Install doctl sdk
         uses: digitalocean/action-doctl@v2
+      
+      - name: deploy the release
         run: |
           doctl compute ssh obou-coffee
           cd obou-coffee
@@ -31,7 +31,7 @@ jobs:
           cd obou-coffee
           export pgadmin_pwd=something
           docker-compose -f docker-compose.yml up -d
-          
+
 
         with:
           token: ${{ secrets.CR_PAT }}
