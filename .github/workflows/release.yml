@@ -1,0 +1,40 @@
+name: Publish Docker image
+on:
+  release:
+    types: [published]
+jobs:
+
+  deploy:
+    name: Deploy to Digital Ocean
+    needs :  publish
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: Check out the repo
+        uses: actions/checkout@v2
+     
+      - name: Install doctl sdk
+        uses: digitalocean/action-doctl@v2
+        run: |
+          doctl compute ssh obou-coffee
+          cd obou-coffee
+          docker-compose down
+          cd ..
+          mv obou-coffee obou-coffee-bkp
+          # mkdir obou-coffee
+          # cd obou-coffee
+          wget https://github.com/mickymots/espresso/releases/download/${{github.github_ref}}/obou-coffee-${{github.github_ref}}.tar
+          mv obou-coffee-${{github.github_ref}}.tar obou-coffee.tar
+          tar xf obou-coffee.tar
+          cd obou-coffee
+          export pgadmin_pwd=something
+          docker-compose -f docker-compose.yml up -d
+          
+
+        with:
+          token: ${{ secrets.CR_PAT }}
+
+        
+     
