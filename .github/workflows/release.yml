@@ -6,8 +6,7 @@ jobs:
 
   deploy:
     name: Deploy to Digital Ocean
-    needs :  publish
-    
+       
     runs-on: ubuntu-latest
     
     steps:
