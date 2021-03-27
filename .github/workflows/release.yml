@@ -13,7 +13,7 @@ jobs:
       - name: Install doctl sdk
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.CR_PAT }}
+          token: ${{ secrets.DOCN_DEPLOY_TOKEN }}
       
       - name: deploy the release
         run: |
