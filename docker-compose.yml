@@ -7,7 +7,8 @@ services:
     ports:
        - "80:80"
     volumes:
-       - espresso_web:/static  # for syncing with django source code
+       - espresso_web:/static
+       - espresso_uploads:/uploads  
        - ./config/nginx:/etc/nginx/conf.d
     depends_on:
       - web
@@ -19,10 +20,11 @@ services:
       context: src
       dockerfile: Dockerfile
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn espresso.wsgi -b 0.0.0.0:8000"
-    image: gabbarsingh/obou-coffee:1.2
+    image: gabbarsingh/obou-coffee:1.3
     volumes:
-      - ./src:/code               #for development
-      - espresso_web:/static     #for production
+      - ./src:/code               
+      - espresso_web:/static
+      - espresso_uploads:/uploads    
 
     depends_on:
       - db
@@ -46,7 +48,6 @@ services:
     image: adminer
     container_name: espresso-db-client
     hostname: espresso-db-client
-    restart: always
     depends_on:
       - db
     ports:
@@ -55,3 +56,4 @@ services:
 volumes: 
   pgdata:
   espresso_web:
+  espresso_uploads:

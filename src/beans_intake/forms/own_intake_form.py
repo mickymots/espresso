@@ -2,11 +2,11 @@ from django import forms
 
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget
-from beans_intake.models import Location, OwnIntake
+from beans_intake.models import Location, Intake
 
 class OwnIntakeForm(forms.ModelForm): 
 
-    name = forms.CharField(label="Supervisor Name",
+    supervisor_name = forms.CharField(label="Supervisor Name",
                            widget=forms.TextInput(attrs={'class': 'form-control'}) )
 
     lot_location = forms.ModelChoiceField(label="Select lot location",
@@ -15,6 +15,11 @@ class OwnIntakeForm(forms.ModelForm):
     box_count= forms.IntegerField(label="Number of Boxes",
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0)
+
+    total_weight = forms.IntegerField(label="Total Weight",
+                                          widget=forms.NumberInput(attrs={'class': 'form-control'}),
+                                          min_value = 0) 
+
 
     discarded_weight = forms.IntegerField(label="Weight Discarded",
                                           widget=forms.NumberInput(attrs={'class': 'form-control'}),
@@ -27,11 +32,11 @@ class OwnIntakeForm(forms.ModelForm):
     proof_file = forms.FileField(label="Picture of Batch",
                                  widget=forms.FileInput(attrs={'class': 'form-control'})) 
 
-    
-    signature = JSignatureField(label="Signature")
+    supervisor_signature = JSignatureField(label="Supervisor Signature")
 
     class Meta:
-        model = OwnIntake
+        model = Intake
         fields = [
-                "name", "lot_location", "box_count", "discarded_weight", "refloated_weight", "proof_file", "signature"
+                "supervisor_name", "lot_location", "box_count", "total_weight","discarded_weight", 
+                "refloated_weight", "proof_file", "supervisor_signature"
         ]
