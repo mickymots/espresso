@@ -13,9 +13,16 @@
 
             {{ form }}
 
-            <input type="reset" value="Cancel" class="btn btn-outline-secondary">
+            <div>&nbsp;</div>
+            <div class="row">
+                <div class="col">
+                    <input type="reset" value="Cancel" class="btn btn-outline-secondary">
+                </div>
+                <div class="col">
 
-            <input type="submit" value="Submit" class="btn  btn-primary">
+                    <input type="submit" value="Submit" class="btn  btn-primary">
+                </div>
+            </div>
             {% csrf_token %}
         </div>
 

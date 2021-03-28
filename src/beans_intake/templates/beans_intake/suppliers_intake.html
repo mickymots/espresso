@@ -1,7 +1,92 @@
-
-
 {% extends "homepage/base_template.html" %}
 
+{% load crispy_forms_tags %}
 {% block content %}
- <h1> Supplier intake </h1>
+
+<div class="col-lg-6">
+    <h1 class="display-4">Suppliers Intake</h1>
+
+    {{ form.media }}
+    <form method="post" enctype="multipart/form-data" class="form">
+
+        <div class="form-group row">
+
+            <div class="col">
+                {{ form.lot_location|as_crispy_field }}
+            </div>
+       
+            <div class="col">
+                {{ form.box_count|as_crispy_field }}
+            </div>
+
+        </div>
+
+        <p>&nbsp;</p>
+
+        <div class="form-group row">
+            <div class="col">
+                {{ form.total_weight|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.discarded_weight|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.refloated_weight|as_crispy_field }}
+            </div>
+
+        </div>
+
+        <p>&nbsp;</p>
+
+        
+        <div class="form-group row">
+
+            <div class="col">
+                {{ form.supervisor_name|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.representative_name|as_crispy_field }}
+            </div>
+        </div>
+
+        <p>&nbsp;</p>
+
+
+
+        <div class="form-group row">
+
+            <div class="col-6">
+                {{ form.supervisor_signature|as_crispy_field }}
+            </div>
+
+            <div class="col-6">
+                {{ form.representative_signature|as_crispy_field }}
+            </div>
+
+        </div>
+        <p>&nbsp;</p>
+
+        <div class="form-group row">
+            <div class="col">
+                {{ form.proof_file|as_crispy_field }}
+            </div>
+
+        </div>
+        <p>&nbsp;</p>
+
+        <div class="form-group row">
+            <div class="col">
+            <input type="reset" value="Cancel" class="btn btn-outline-secondary">
+                </div>
+                <div class="col">
+            <input type="submit" value="Submit" class="btn  btn-primary">
+        </div>
+            {% csrf_token %}
+        </div>
+
+    </form>
+</div>
 {% endblock %}

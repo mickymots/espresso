@@ -9,5 +9,6 @@ urlpatterns = [
     path('suppliers_intake/', views.suppliers_intake, name='suppliers_intake'),
     path('get_refloats/', views.get_refloats, name='get refloats'),
     path('get_refloats/<int:refloat_id>/', views.get_refloat_details, name='get refloats with id'),
+    path('do_refloat_intake/', views.do_refloat_intake, name='do refloats intake'),
     
 ]

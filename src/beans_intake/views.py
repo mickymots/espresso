@@ -4,6 +4,8 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from jsignature.utils import draw_signature
 from .forms.own_intake_form import OwnIntakeForm
+from .forms.supplier_intake_form import SupplierIntakeForm
+from .forms.refloat_intake_form import RefloatIntakeForm
 from .models import Intake, Location, Status, Batch, Refloat
 
 
@@ -36,7 +38,15 @@ def handle_uploaded_file(f):
 def get_intake_model(intake_form):
     pass
 
-def process_intake_form(intake_form, file_name):
+def process_intake_form(is_external, intake_form, file_name):
+
+    # intake_form.cleaned_data['representative_name']
+    representative_name = ''
+    representative_signature = ''
+
+    if is_external:
+         representative_name = intake_form.cleaned_data['representative_name']
+         representative_signature=intake_form.cleaned_data['representative_signature']
     
     intake = Intake(supervisor_name=intake_form.cleaned_data['supervisor_name'],  # name,
                     lot_location=intake_form.cleaned_data['lot_location'],
@@ -46,8 +56,9 @@ def process_intake_form(intake_form, file_name):
                     refloated_weight=intake_form.cleaned_data['refloated_weight'],
                     proof_file=file_name,
                     supervisor_signature=intake_form.cleaned_data['supervisor_signature'],
-                    representative_name='',
-                    representative_signature=''
+                    representative_name= representative_name,
+                    representative_signature = representative_signature,
+                    is_external = is_external
                     )
                     
     batch = Batch(location = intake.lot_location, 
@@ -76,7 +87,7 @@ def own_intake(request):
 
         if intake_form.is_valid():
             file_name = handle_uploaded_file(request.FILES["proof_file"])
-            intake = process_intake_form(intake_form, file_name)
+            intake = process_intake_form(False, intake_form, file_name)
 
             context['message'] = "Intake saved."
             context['intake'] = intake
@@ -102,26 +113,65 @@ def get_intake_details(request, intake_id):
 
 
 def suppliers_intake(request):
-    template = loader.get_template('beans_intake/suppliers_intake.html')
-    context = {
-        'latest_question_list': [],
-    }
-    return HttpResponse(template.render(context, request))
+    template = 'beans_intake/suppliers_intake.html'
+    context = {}
+    
+    if request.POST:
+        intake_form = SupplierIntakeForm(request.POST, request.FILES)
+
+        if intake_form.is_valid():
+            file_name = handle_uploaded_file(request.FILES["proof_file"])
+            intake = process_intake_form(True, intake_form, file_name)
+
+            context['message'] = "Intake saved."
+            context['intake'] = intake
+
+            return render(request, intake_details_template, context)
+        else:
+            context['message'] = "Intake Failed."
+            context['error'] = True
+    
+    # Create new form
+    context['form'] = SupplierIntakeForm()
+    return render(request, template, context)
+
+
 
 def get_refloats(request):
     template = 'beans_intake/refloats.html'
     context = {}
-    query_results = Refloat.objects.all()
+    query_results = Refloat.objects.all().filter(floated=False)
     context['query_results'] = query_results
     return render(request, template, context=context)
    
-
 def get_refloat_details(request, refloat_id):
     template = 'beans_intake/refloats_intake.html'
     context = {}
     refloat  = Refloat.objects.get(pk=refloat_id)
-    # next_status =  get_next_status(batch)
-    # Create new form
+
     context['refloat'] = refloat
+    context['form'] = RefloatIntakeForm()
     
     return render(request, template, context=context)
+
+def do_refloat_intake(request):
+    # template = 'beans_intake/index.html'
+    if request.POST:
+        refloat_id = request.POST.get('refloat_id')
+        total_weight = request.POST.get('total_weight')
+
+        refloat = Refloat.objects.get(pk=refloat_id)
+        refloat.floated = True
+
+        batch = Batch(location = refloat.intake.lot_location, 
+                  batch_weight = total_weight,
+                  is_second_float = True,
+                  intake = refloat.intake,
+                  status = Status.objects.get(pk=BATCH_STATUS_FLOATED)
+                )
+        batch.save()
+        refloat.save()
+
+    context = {}
+    context['message'] = f"Refloat Intake Created - Batch ID: {batch.id}"
+    return redirect('get refloats')

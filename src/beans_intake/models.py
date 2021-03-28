@@ -44,6 +44,7 @@ class Batch(models.Model):
 class Refloat(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.SET_NULL, null=True)
     refloat_weight = models.IntegerField()
+    floated = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
 
 
