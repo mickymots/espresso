@@ -35,6 +35,7 @@ class Status(models.Model):
 class Batch(models.Model):
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
     batch_weight = models.IntegerField()
+    
     is_second_float = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
@@ -47,4 +48,14 @@ class Refloat(models.Model):
     floated = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
 
+class DryingBatch(models.Model):
+    dry_coffee_weight = models.IntegerField()
+    created_date = models.DateField(default=timezone.now)
+    batch = models.ForeignKey(Batch, on_delete=models.SET_NULL, null=True)
 
+
+class Sorter(models.Model):
+    name = models.CharField(max_length=60)
+    dob = models.DateField()
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateField(default=timezone.now)
