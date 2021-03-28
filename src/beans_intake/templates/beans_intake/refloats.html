@@ -1,0 +1,49 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+<h1> Oubu Coffee - Refloats List  </h1>
+
+<p></p>
+{{message}}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Intake ID</th>
+
+            <th>Refloat ID</th>
+
+            <th>Location</th>
+
+            <th>Refloat Weight</th>
+
+            <th>Refloat Date</th>
+
+          
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in query_results %}
+        <tr>
+            <td><a href="/beans_intake/{{ item.intake.id }}"> {{item.intake.id}} </a></td>
+
+            <td>{{ item.id }}</td>
+
+            <td>{{ item.intake.lot_location }}</td>
+
+            <td>{{ item.refloat_weight }}</td>
+
+            <td>{{ item.created_date }}</td>
+            
+            <td>
+                <a href="/beans_intake/get_refloats/{{item.id}}/" class="btn btn-primary btn-sm">Do Intake</a>
+            </td>
+        </tr>
+
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+<h1> Oubu Coffee - Refloat Intake </h1>
+
+
+<form action="/beans_intake/do_refloat_intake/" method="POST">
+
+    <fieldset disabled>
+        <div class="row g-3">
+            <legend>Refloat Details - {{refloat.id }}</legend>
+
+            <div class="row">
+
+                <div class="col">
+                    <label for="Refloat_id">Refloat ID</label>
+                    <input type="text" class="form-control" value="{{refloat.id }}" placeholder="Refloat ID"
+                        id="Refloat_id" aria-label="Refloat ID" />
+                </div>
+                <div class="col">
+                    <label for="Location">Location</label>
+                    <input type="text" class="form-control" value="{{refloat.intake.lot_location }}"
+                        placeholder="Location" id="Location" aria-label="Location">
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col">
+                    <label for="Refloat_created_date">Refloat Created Date</label>
+                    <input type="text" class="form-control" value="{{refloat.created_date }}"
+                        placeholder="Refloat Created Date" id="Refloat_created_date"
+                        aria-label="Refloat Created Date" />
+                </div>
+                <div class="col">
+                    <label for="refloat_weight">Refloat Weight</label>
+                    <input type="text" class="form-control" value="{{refloat.refloat_weight}}"
+                        placeholder="refloat_weight" id="refloat_weight" aria-label="refloat_weight">
+                </div>
+            </div>
+
+        </div>
+
+    </fieldset>
+
+    <p>&nbsp;</p>
+
+    <input type="hidden" value="{{refloat.id}}" name="refloat_id" />
+    <div class="row">
+        <div class="col-6">
+            {{ form }}
+        </div>
+    </div>
+
+    
+        <p>&nbsp;</p>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="/beans_intake/get_refloats/" class="btn btn-outline-primary btn-lg">Cancel</a>
+            </div>
+
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary btn-lg">Confirm Intake</a>
+            </div>
+        </div>
+
+    {% csrf_token %}
+
+</form>
+
+{% endblock %}

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles', 
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -135,4 +136,4 @@ STATIC_ROOT=os.path.join(BASE_DIR, "static")
 JSIGNATURE_WIDTH = 400
 JSIGNATURE_HEIGHT = 150
 JSIGNATURE_COLOR='RED'
-JSIGNATURE_RESET_BUTTON=False
+JSIGNATURE_RESET_BUTTON=True

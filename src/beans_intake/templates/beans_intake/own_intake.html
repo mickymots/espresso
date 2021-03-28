@@ -2,30 +2,30 @@
 
 
 {% block content %}
-<h1> own intake </h1>
 
-{{ form.media }}
-<form method="post"  enctype="multipart/form-data" class="form">
-    <div class="container-fluid">
-        <div class="col-md-5">
+<div class="col-lg-6">
+    <h1 class="display-4">Own Intake</h1>
 
-          
-            <div class="form-group">
+    {{ form.media }}
+    <form method="post" enctype="multipart/form-data" class="form">
 
+        <div class="form-group">
 
-                {{ form }}
+            {{ form }}
 
-                <input type="reset" value="Cancel" class="btn btn-outline-secondary">
-               
-                <input type="submit" value="Submit" class="btn  btn-primary">
-                {% csrf_token %}
+            <div>&nbsp;</div>
+            <div class="row">
+                <div class="col">
+                    <input type="reset" value="Cancel" class="btn btn-outline-secondary">
+                </div>
+                <div class="col">
+
+                    <input type="submit" value="Submit" class="btn  btn-primary">
+                </div>
             </div>
-
+            {% csrf_token %}
         </div>
 
-    </div>
-
-</form>
-
-
+    </form>
+</div>
 {% endblock %}
