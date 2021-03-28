@@ -1,0 +1,46 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+<h1> Oubu Coffee - Refloat Intake  </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Intake ID</th>
+
+            <th>Reflaot ID</th>
+
+            <th>Location</th>
+
+            <th>Reflaot Weight</th>
+
+            <th>Refloat Date</th>
+
+          
+
+        </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+            <td><a href="/beans_intake/{{ item.intake.id }}"> {{refloat.intake.id}} </a></td>
+
+            <td>{{ refloat.id }}</td>
+
+            <td>{{ refloat.intake.lot_location }}</td>
+
+            <td>{{ refloat.refloat_weight }}</td>
+
+            <td>{{ refloat.created_date }}</td>
+            
+            <td>
+                <a href="/beans_intake/get_refloats/{{item.id}}/" class="btn btn-primary btn-sm">Do Intake</a>
+            </td>
+        </tr>
+
+
+      
+    </tbody>
+</table>
+
+{% endblock %}

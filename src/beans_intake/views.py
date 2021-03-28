@@ -4,7 +4,7 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from jsignature.utils import draw_signature
 from .forms.own_intake_form import OwnIntakeForm
-from .models import Intake, Location, Status, Batch
+from .models import Intake, Location, Status, Batch, Refloat
 
 
 # Template files
@@ -60,8 +60,10 @@ def process_intake_form(intake_form, file_name):
     with transaction.atomic():
         intake.save()
         batch.save()
-    
-    
+        if intake.refloated_weight > 0:
+            refloat = Refloat(intake = intake, refloat_weight = intake.refloated_weight)
+            refloat.save()
+                
     intake = Intake.objects.get(pk=intake.id)
     return intake
 
@@ -105,3 +107,21 @@ def suppliers_intake(request):
         'latest_question_list': [],
     }
     return HttpResponse(template.render(context, request))
+
+def get_refloats(request):
+    template = 'beans_intake/refloats.html'
+    context = {}
+    query_results = Refloat.objects.all()
+    context['query_results'] = query_results
+    return render(request, template, context=context)
+   
+
+def get_refloat_details(request, refloat_id):
+    template = 'beans_intake/refloats_intake.html'
+    context = {}
+    refloat  = Refloat.objects.get(pk=refloat_id)
+    # next_status =  get_next_status(batch)
+    # Create new form
+    context['refloat'] = refloat
+    
+    return render(request, template, context=context)
