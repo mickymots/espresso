@@ -54,7 +54,8 @@ def process_intake_form(is_external, intake_form, file_name):
     
     intake = Intake(supervisor_name=intake_form.cleaned_data['supervisor_name'],  # name,
                     lot_location=intake_form.cleaned_data['lot_location'],
-                    total_box_count=intake_form.cleaned_data['box_count'],
+                    total_box_count=intake_form.cleaned_data['total_box_count'],
+                    passed_float_box_count=intake_form.cleaned_data['passed_float_box_count'],
                     is_floated = intake_form.cleaned_data['is_floated'],
                    
                     proof_file=file_name,

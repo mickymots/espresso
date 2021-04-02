@@ -44,14 +44,14 @@ services:
       POSTGRES_PASSWORD: $pgadmin_pwd
       POSTGRES_DB: espresso
 
-  admin:
-    image: adminer
-    container_name: espresso-db-client
-    hostname: espresso-db-client
-    depends_on:
-      - db
-    ports:
-      - 8080:8080
+  # admin:
+  #   image: adminer
+  #   container_name: espresso-db-client
+  #   hostname: espresso-db-client
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 8080:8080
 
 volumes: 
   pgdata:

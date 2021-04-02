@@ -14,7 +14,10 @@ class OwnIntakeForm(forms.ModelForm):
     lot_location = forms.ModelChoiceField(label="Select lot location",
                                  queryset=Location.objects.all() , widget=forms.Select(attrs={'class':'form-control'}))
 
-    box_count= forms.IntegerField(label="Number of Boxes",
+    total_box_count= forms.IntegerField(label="Number of Boxes",
+                                  widget=forms.NumberInput(attrs={'class': 'form-control'}),
+                                  min_value = 0)
+    passed_float_box_count = forms.IntegerField(label="Number of Passed Float Boxes",
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0)
 
@@ -43,6 +46,6 @@ class OwnIntakeForm(forms.ModelForm):
     class Meta:
         model = Intake
         fields = [
-                "supervisor_name", "lot_location", "box_count", "is_floated", "supervisor_signature","proof_file",
+                "supervisor_name", "lot_location", "total_box_count", "passed_float_box_count" , "is_floated", "supervisor_signature","proof_file",
                 # "total_weight","discarded_weight", "refloated_weight",  
         ]
