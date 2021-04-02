@@ -59,9 +59,12 @@
                     id="box_count" aria-label="Box Count">
             </div>
         </div>
-        <div>&nbsp;</div>
+       
         {% endif %}
         
+
+        {% if intake.is_external %}
+      
         <div class="row">
               
                 <div class="col-lg-6">
@@ -69,8 +72,28 @@
                     <input type="text" class="form-control" value="{{ intake.is_external | yesno:'Yes, No'}}" placeholder="External Supplier"
                         id="External_Supplier" aria-label="External Supplier">
                 </div>
+
+                <div class="col-lg-6">
+                    <label for="Supplier_Name">Supplier Name </label>
+                    <input type="text" class="form-control" value="{{ intake.supplier_name.name}}" placeholder="Supplier_Name"
+                        id="Supplier_Name" aria-label="Supplier_Name">
+                </div>
             
         </div>
+        <div>&nbsp;</div>
+        {% endif %}
+
+        <div class="row">
+           
+            
+            <div class="col-lg-6">
+                <label for="External_Supplier">Batch Status </label>
+                <input type="text" class="form-control" value="{{ intake_details.status}}" placeholder="External Supplier"
+                    id="External_Supplier" aria-label="External Supplier">
+            </div>
+        
+    </div>
+
 
         <div>&nbsp;</div>
 

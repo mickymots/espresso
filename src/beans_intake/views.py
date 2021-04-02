@@ -122,9 +122,11 @@ def own_intake(request):
 def get_intake_details(request, intake_id):
     try:
         intake = Intake.objects.get(pk=intake_id)
+        intake_details = IntakeDetails.objects.get(is_active_status=True, intake=intake)
+
     except Intake.DoesNotExist:
         raise Http404("Intake does not exist")
-    return render(request, intake_details_template, {'intake': intake})
+    return render(request, intake_details_template, {'intake': intake, 'intake_details':intake_details})
 
 
 def suppliers_intake(request):

@@ -65,7 +65,7 @@ def get_batch_details(request, batch_id):
     next_status = get_next_status(intake_details)
 
     # Create new form
-    context['batch'] = intake
+    context['batch'] = intake_details
     context['next_status'] = next_status
     context['form'] = CoffeeDryForm()
     return render(request, template, context=context)
