@@ -6,14 +6,14 @@ from jsignature.utils import draw_signature
 from .forms.own_intake_form import OwnIntakeForm
 from .forms.supplier_intake_form import SupplierIntakeForm
 from .forms.refloat_intake_form import RefloatIntakeForm
-from .models import Intake, Location, Status, Batch, Refloat
+from .models import Intake, IntakeDetails, Location, Status, Refloat
 
 
 # Template files
 own_intake_template = 'beans_intake/own_intake.html'
 intake_details_template = 'beans_intake/intake_details.html/'
 
-BATCH_STATUS_FLOATED = 3000000
+BATCH_STATUS_INTAKE = 3000000
 BATCH_STATUS_DRYING = 3000001
 BATCH_STATUS_RESTING = 3000002
 BATCH_STATUS_PARCHMENT = 3000003
@@ -28,12 +28,16 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def handle_uploaded_file(f):
-    file_name = 'uploads/'+f.name
-    with open(file_name, 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-    return file_name
+def handle_uploaded_file(request):
+    if request.FILES:
+        filedata = request.FILES["proof_file"]
+
+        file_name = 'uploads/'+filedata.name
+        with open(file_name, 'wb+') as destination:
+            for chunk in filedata.chunks():
+                destination.write(chunk)
+        return file_name
+    
 
 def get_intake_model(intake_form):
     pass
@@ -43,37 +47,47 @@ def process_intake_form(is_external, intake_form, file_name):
     # intake_form.cleaned_data['representative_name']
     representative_name = ''
     representative_signature = ''
+    supplier_name = None
+    lot_location = None
 
     if is_external:
          representative_name = intake_form.cleaned_data['representative_name']
-         representative_signature=intake_form.cleaned_data['representative_signature']
+         representative_signature = intake_form.cleaned_data['representative_signature']
+         supplier_name = intake_form.cleaned_data['supplier_name']
+    else:
+        lot_location = intake_form.cleaned_data['lot_location']
     
-    intake = Intake(supervisor_name=intake_form.cleaned_data['supervisor_name'],  # name,
-                    lot_location=intake_form.cleaned_data['lot_location'],
-                    box_count=intake_form.cleaned_data['box_count'],
-                    total_weight=intake_form.cleaned_data['total_weight'],
-                    discarded_weight=intake_form.cleaned_data['discarded_weight'],
-                    refloated_weight=intake_form.cleaned_data['refloated_weight'],
-                    proof_file=file_name,
-                    supervisor_signature=intake_form.cleaned_data['supervisor_signature'],
-                    representative_name= representative_name,
+    intake = Intake(supervisor_name = intake_form.cleaned_data['supervisor_name'],  # name,
+                    lot_location = lot_location,
+                    total_box_count = intake_form.cleaned_data['total_box_count'],
+                    passed_float_box_count = intake_form.cleaned_data['passed_float_box_count'],
+                    is_floated = intake_form.cleaned_data['is_floated'],
+                    proof_file = file_name,
+                    supplier_name = supplier_name,
+                    supervisor_signature = intake_form.cleaned_data['supervisor_signature'],
+                    representative_name = representative_name,
                     representative_signature = representative_signature,
                     is_external = is_external
-                    )
                     
-    batch = Batch(location = intake.lot_location, 
-                  batch_weight = intake.total_weight - (intake.discarded_weight + intake.refloated_weight),
-                  is_second_float = False,
-                  intake = intake,
-                  status = Status.objects.get(pk=BATCH_STATUS_FLOATED)
-                )
+                    )
+    intake_details = IntakeDetails(intake = intake, 
+                status = Status.objects.get(pk=BATCH_STATUS_INTAKE),
+                marker_placed = False
+            )     
+    # batch = Batch(location = intake.lot_location, 
+    #               batch_weight = intake.total_weight - (intake.discarded_weight + intake.refloated_weight),
+    #               is_second_float = False,
+    #               intake = intake,
+    #               status = Status.objects.get(pk=BATCH_STATUS_FLOATED)
+    #             )
 
     with transaction.atomic():
         intake.save()
-        batch.save()
-        if intake.refloated_weight > 0:
-            refloat = Refloat(intake = intake, refloat_weight = intake.refloated_weight)
-            refloat.save()
+        intake_details.save()
+        # batch.save()
+        # if intake.refloated_weight > 0:
+        #     refloat = Refloat(intake = intake, refloat_weight = intake.refloated_weight)
+        #     refloat.save()
                 
     intake = Intake.objects.get(pk=intake.id)
     return intake
@@ -86,7 +100,8 @@ def own_intake(request):
         intake_form = OwnIntakeForm(request.POST, request.FILES)
 
         if intake_form.is_valid():
-            file_name = handle_uploaded_file(request.FILES["proof_file"])
+            
+            file_name = handle_uploaded_file(request)
             intake = process_intake_form(False, intake_form, file_name)
 
             context['message'] = "Intake saved."
@@ -107,9 +122,11 @@ def own_intake(request):
 def get_intake_details(request, intake_id):
     try:
         intake = Intake.objects.get(pk=intake_id)
+        intake_details = IntakeDetails.objects.get(is_active_status=True, intake=intake)
+
     except Intake.DoesNotExist:
         raise Http404("Intake does not exist")
-    return render(request, intake_details_template, {'intake': intake})
+    return render(request, intake_details_template, {'intake': intake, 'intake_details':intake_details})
 
 
 def suppliers_intake(request):
@@ -120,7 +137,7 @@ def suppliers_intake(request):
         intake_form = SupplierIntakeForm(request.POST, request.FILES)
 
         if intake_form.is_valid():
-            file_name = handle_uploaded_file(request.FILES["proof_file"])
+            file_name = handle_uploaded_file(request)
             intake = process_intake_form(True, intake_form, file_name)
 
             context['message'] = "Intake saved."

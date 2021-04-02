@@ -2,18 +2,15 @@ from django import forms
 
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget
-from beans_intake.models import Batch
+from beans_intake.models import Intake
 
 
 class CoffeeDryForm(forms.ModelForm):
 
-    total_weight = forms.IntegerField(label="Total Weight",
-                                      widget=forms.NumberInput(
-                                          attrs={'class': 'form-control'}),
-                                      min_value=0)
-
+    is_marker_placed = forms.BooleanField(label="Have placed marker at batch?", 
+                                  widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id':"is_marker_placed"}))
     class Meta:
-        model = Batch
+        model = Intake
         fields = [
-            "total_weight"
+            "is_marker_placed"
         ]

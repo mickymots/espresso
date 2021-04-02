@@ -4,94 +4,96 @@
 <h1> Oubu Coffee - Confirm Coffee Drying </h1>
 
 
-<fieldset disabled>
-    <div class="row g-3">
-        <legend>Batch Details - {{batch.id}}</legend>
-
-        <div class="row">
-
-            <div class="col">
-                <label for="batch_id">Batch ID</label>
-                <input type="text" class="form-control" value="{{batch.id}}" placeholder="Batch ID" id="batch_id"
-                    aria-label="Batch ID" />
-            </div>
-            <div class="col">
-                <label for="Location">Location</label>
-                <input type="text" class="form-control" value="{{batch.location}}" placeholder="Location" id="Location"
-                    aria-label="Location">
-            </div>
-        </div>
-
-
-        <div class="row">
-
-            <div class="col">
-                <label for="batch_created_date">Batch Created Date</label>
-                <input type="text" class="form-control" value="{{batch.created_date}}" placeholder="Batch Created Date"
-                    id="batch_created_date" aria-label="Batch Created Date" />
-            </div>
-            <div class="col">
-                <label for="second_float">Is Second Float?</label>
-                <input type="text" class="form-control" value="{{batch.is_second_float|yesno:'Yes,No'}}"
-                    placeholder="Location" id="second_float" aria-label="second_float">
-            </div>
-        </div>
-
-
-        <div class="row">
-
-            <div class="col">
-                <label for="batch_status">Batch Status</label>
-                <input type="text" class="form-control" value="{{batch.status}}" placeholder="Batch Status"
-                    id="batch_status" aria-label="Batch Status" />
-            </div>
-            <div class="col">
-                <label for="second_float">Is Second Float?</label>
-                <input type="text" class="form-control" value="{{batch.is_second_float|yesno:'Yes,No'}}"
-                    placeholder="Location" id="second_float" aria-label="second_float">
-            </div>
-        </div>
-
-
-
-
-    </div>
-
-</fieldset>
-
-
-<p>&nbsp;</p>
-
-
 <form action="/dry_coffee/update_batch_status/" method="POST">
-
-    <input type="hidden" value="{{batch.id}}" name="batch_id" />
-
-    <div class="form-group">
-
-        <div class="row">
-            <div class="col-6">
-                {{ form.total_weight|as_crispy_field }}
+    <div>&nbsp;</div>
+    <div class="col-lg-6">
+        <fieldset disabled>
+       
+            <legend>Intake Details - {{batch.intake.id}}</legend>
+            <div>&nbsp;</div>
+            <div class="row">
+    
+                <div class="col">
+                    <label for="batch_id">Intake ID</label>
+                    <input type="text" class="form-control" value="{{batch.intake.id}}" placeholder="Intake ID" id="batch_id"
+                        aria-label="Intake ID" />
+                </div>
+                <div class="col">
+                    <label for="Location">Location</label>
+                    <input type="text" class="form-control" value="{{ batch.intake.lot_location|default_if_none:'N/A' }}" placeholder="Location" id="Location"
+                        aria-label="Location">
+                </div>
             </div>
-        </div>
+    
+            <div>&nbsp;</div>
+            <div class="row">
+    
+                <div class="col">
+                    <label for="batch_created_date">Intake Created Date</label>
+                    <input type="text" class="form-control" value="{{batch.intake.created_date}}" placeholder="Intake Created Date"
+                        id="batch_created_date" aria-label="Intake Created Date" />
+                </div>
+                <div class="col">
+    
+                    <label for="batch_created_date">From Supplier? </label>
+                    <input type="text" class="form-control" value="{{batch.intake.is_external | yesno:'Yes, No' }}" placeholder="Intake Created Date"
+                        id="batch_created_date" aria-label="Intake Created Date" />
+                </div>
+                    
+    
+            </div>
+           
+    
+            <div>&nbsp;</div>
+            <div class="row">
+    
+                <div class="col">
+                    <label for="batch_status">Batch Status</label>
+                    <input type="text" class="form-control" value="{{batch.status}}" placeholder="Intake Status"
+                        id="batch_status" aria-label="Intake Status" />
+                </div>
+                <div class="col">
+                    <!-- <label for="second_float">Is Second Float?</label>
+                    <input type="text" class="form-control" value="{{batch.is_second_float|yesno:'Yes,No'}}"
+                        placeholder="Location" id="second_float" aria-label="second_float"> -->
+                </div>
+            </div>
+    
+        </fieldset>   
 
-        <p>&nbsp;</p>
+            <input type="hidden" value="{{batch.intake.id}}" name="batch_id" />
 
+            <div>&nbsp;</div>
 
-        <div class="row">
-            <div class="col-3">
-                <a href="/dry_coffee/" class="btn btn-outline-primary btn-lg">Cancel</a>
+            <div class="row">
+                <div class="col">
+                    {{ form.is_marker_placed|as_crispy_field }}
+                </div>
             </div>
 
-            <div class="col-6">
+            <p>&nbsp;</p>
 
-                <button type="submit" class="btn btn-primary btn-lg">Move to {{next_status.status}} Status</a>
+
+            <div class="row">
+                <div class="col-3">
+                    <a href="/dry_coffee/" class="btn btn-outline-primary btn-lg">Cancel</a>
+                </div>
+
+                <div class="col-6">
+
+                    <button type="submit" class="btn btn-primary btn-lg">Move to {{next_status.status}} Status</a>
+                </div>
             </div>
-        </div>
 
+    
+
+        
+    
+    
     </div>
+    
 
-    {% csrf_token %}
+        {% csrf_token %}
 
 </form>
 

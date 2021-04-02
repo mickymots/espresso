@@ -2,7 +2,7 @@ from django import forms
 
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget
-from beans_intake.models import Batch
+
 
 
 class RefloatIntakeForm(forms.ModelForm):
@@ -12,8 +12,4 @@ class RefloatIntakeForm(forms.ModelForm):
                                           attrs={'class': 'form-control'}),
                                       min_value=0)
 
-    class Meta:
-        model = Batch
-        fields = [
-            "total_weight"
-        ]
+

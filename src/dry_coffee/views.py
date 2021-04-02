@@ -6,14 +6,14 @@ from django.http import HttpResponse
 from django.template import loader
 # from .batch_form import BatchForm
 from .forms.coffee_dry_form import CoffeeDryForm
-from beans_intake.models import Intake, Location, Status, Batch, DryingBatch
-from beans_intake.views import BATCH_STATUS_DRYING, BATCH_STATUS_FLOATED, BATCH_STATUS_GRADING, BATCH_STATUS_PARCHMENT, BATCH_STATUS_RESTING
+from beans_intake.models import Intake, Location, Status,  DryingBatch, IntakeDetails
+from beans_intake.views import BATCH_STATUS_DRYING, BATCH_STATUS_INTAKE, BATCH_STATUS_GRADING, BATCH_STATUS_PARCHMENT, BATCH_STATUS_RESTING
 
 
 def index(request):
     template = 'dry_coffee/index.html'
     context = {}
-    query_results = Batch.objects.all().filter(status=Status.objects.get(pk=BATCH_STATUS_FLOATED))
+    query_results = IntakeDetails.objects.all().filter(status=Status.objects.get(pk=BATCH_STATUS_INTAKE)).filter(is_active_status=True)
     context['query_results'] = query_results
     return render(request, template, context=context)
 
@@ -22,24 +22,36 @@ def update_batch_status(request):
     
     if request.POST:
         batch_id = request.POST.get('batch_id')
-        total_weight = request.POST.get('total_weight')
-        batch = Batch.objects.get(pk=batch_id)
+        is_marker_placed = request.POST.get('is_marker_placed')
 
-        batch.status = get_next_status(batch)
+        intake = Intake.objects.get(pk=batch_id)
+        intake_details = IntakeDetails.objects.get(intake=intake, is_active_status=True)
+        
+        intake_details.is_active_status = False
 
-        if batch.status.id == BATCH_STATUS_DRYING:
-            drying_batch = DryingBatch(
-                dry_coffee_weight = total_weight,
-                batch = batch
+        if is_marker_placed == 'on':
+            is_marker_placed = True
+        else:
+            is_marker_placed = False
+
+
+        new_intake_details = IntakeDetails(intake = intake, 
+                status = get_next_status(intake_details),
+                marker_placed = is_marker_placed
             )
 
-            drying_batch.save()
+# intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
+#     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
+#     marker_placed = models.BooleanField(default=True)
+#     is_active_status = models.BooleanField(default=True)
+#     created_date = models.DateField(default=timezone.now)
 
-        batch.save()
+        intake_details.save()
+        new_intake_details.save()
 
     context = {}
-    query_results = Batch.objects.all()
-    context['query_results'] = query_results
+    # query_results = Intake.objects.all()
+    # context['query_results'] = query_results
     return redirect('index')
 
 
@@ -47,18 +59,21 @@ def update_batch_status(request):
 def get_batch_details(request, batch_id):
     template = 'dry_coffee/batch_details.html'
     context = {}
-    batch = Batch.objects.get(pk=batch_id)
-    next_status =  get_next_status(batch)
+    intake = Intake.objects.get(pk=batch_id)
+    intake_details = IntakeDetails.objects.get(is_active_status=True, intake=intake)
+
+    next_status = get_next_status(intake_details)
+
     # Create new form
-    context['batch'] = batch
+    context['batch'] = intake_details
     context['next_status'] = next_status
     context['form'] = CoffeeDryForm()
     return render(request, template, context=context)
 
 
-def get_next_status(batch):
-    status = batch.status
-    if status.id == BATCH_STATUS_FLOATED:
+def get_next_status(intake_details):
+    status = intake_details.status
+    if status.id == BATCH_STATUS_INTAKE:
         return Status.objects.get(pk=BATCH_STATUS_DRYING)
     elif status.id == BATCH_STATUS_DRYING:
         return Status.objects.get(pk=BATCH_STATUS_RESTING)
@@ -67,4 +82,4 @@ def get_next_status(batch):
     elif status.id == BATCH_STATUS_PARCHMENT:
         return Status.objects.get(pk=BATCH_STATUS_GRADING)
     else:
-        return Status.objects.get(pk=BATCH_STATUS_FLOATED)
+        return Status.objects.get(pk=BATCH_STATUS_INTAKE)

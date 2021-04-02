@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="col-lg-6">
-    <h1 class="display-4">Suppliers Intake</h1>
+    <h1 class="display-4">Suppliers Cherry Intake</h1>
 
     {{ form.media }}
     <form method="post" enctype="multipart/form-data" class="form">
@@ -12,35 +12,31 @@
         <div class="form-group row">
 
             <div class="col">
-                {{ form.lot_location|as_crispy_field }}
+                {{ form.supplier_name|as_crispy_field }}
             </div>
        
             <div class="col">
-                {{ form.box_count|as_crispy_field }}
+                {{ form.total_box_count|as_crispy_field }}
             </div>
 
         </div>
 
-        <p>&nbsp;</p>
-
+        <div>&nbsp;</div>
         <div class="form-group row">
+        
             <div class="col">
-                {{ form.total_weight|as_crispy_field }}
-            </div>
-
-            <div class="col">
-                {{ form.discarded_weight|as_crispy_field }}
-            </div>
-
-            <div class="col">
-                {{ form.refloated_weight|as_crispy_field }}
+                {{ form.is_floated|as_crispy_field }}
             </div>
 
         </div>
+        <div class="form-group row floated" >
+            <div>&nbsp;</div>
+            <div class="col">
+                {{ form.passed_float_box_count|as_crispy_field }}
+            </div>
+        </div>
+        <div>&nbsp;</div>
 
-        <p>&nbsp;</p>
-
-        
         <div class="form-group row">
 
             <div class="col">
