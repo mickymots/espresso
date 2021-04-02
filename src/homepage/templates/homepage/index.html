@@ -25,7 +25,8 @@
         <td><a href="beans_intake/{{ item.id }}"> {{item.id}}  </a></td> 
         
         <td>{{ item.supervisor_name }}</td>
-        <td>{{ item.lot_location }}</td>
+
+        <td>{{ item.lot_location |default_if_none:"N/A" }}</td>
 
         <td>{{ item.created_date }}</td>
         <td>{{ item.is_external | yesno:'Yes, No'}}</td>

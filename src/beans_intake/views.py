@@ -47,20 +47,25 @@ def process_intake_form(is_external, intake_form, file_name):
     # intake_form.cleaned_data['representative_name']
     representative_name = ''
     representative_signature = ''
+    supplier_name = None
+    lot_location = None
 
     if is_external:
          representative_name = intake_form.cleaned_data['representative_name']
-         representative_signature=intake_form.cleaned_data['representative_signature']
+         representative_signature = intake_form.cleaned_data['representative_signature']
+         supplier_name = intake_form.cleaned_data['supplier_name']
+    else:
+        lot_location = intake_form.cleaned_data['lot_location']
     
-    intake = Intake(supervisor_name=intake_form.cleaned_data['supervisor_name'],  # name,
-                    lot_location=intake_form.cleaned_data['lot_location'],
-                    total_box_count=intake_form.cleaned_data['total_box_count'],
-                    passed_float_box_count=intake_form.cleaned_data['passed_float_box_count'],
+    intake = Intake(supervisor_name = intake_form.cleaned_data['supervisor_name'],  # name,
+                    lot_location = lot_location,
+                    total_box_count = intake_form.cleaned_data['total_box_count'],
+                    passed_float_box_count = intake_form.cleaned_data['passed_float_box_count'],
                     is_floated = intake_form.cleaned_data['is_floated'],
-                   
-                    proof_file=file_name,
-                    supervisor_signature=intake_form.cleaned_data['supervisor_signature'],
-                    representative_name= representative_name,
+                    proof_file = file_name,
+                    supplier_name = supplier_name,
+                    supervisor_signature = intake_form.cleaned_data['supervisor_signature'],
+                    representative_name = representative_name,
                     representative_signature = representative_signature,
                     is_external = is_external
                     )
@@ -125,7 +130,7 @@ def suppliers_intake(request):
         intake_form = SupplierIntakeForm(request.POST, request.FILES)
 
         if intake_form.is_valid():
-            file_name = handle_uploaded_file(request.FILES["proof_file"])
+            file_name = handle_uploaded_file(request)
             intake = process_intake_form(True, intake_form, file_name)
 
             context['message'] = "Intake saved."

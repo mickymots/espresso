@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div>&nbsp;</div><div>&nbsp;</div>
+        <div>&nbsp;</div>
         <div class="row">
 
             <div class="col-lg-6">
@@ -48,20 +48,28 @@
             </div>
         </div>
 
-        <div>&nbsp;</div><div>&nbsp;</div>
+        <div>&nbsp;</div>
 
+        {% if intake.is_floated %}
+        <div class="row">
+          
+            <div class="col-lg-6">
+                <label for="box_count">Floated Box Count </label>
+                <input type="text" class="form-control" value="{{intake.passed_float_box_count}}" placeholder="Box Count"
+                    id="box_count" aria-label="Box Count">
+            </div>
+        </div>
+        <div>&nbsp;</div>
+        {% endif %}
         
         <div class="row">
-            <div class="col-lg-6">
-                {% if intake.is_external %}
-                <input type="checkbox" class="form-check-input" checked="{{intake.is_external }}" placeholder=""
-                    id="is_external" aria-label="is external">
-                {%else%}
-                <input type="checkbox" class="form-check-input" placeholder="" id="is_external"
-                    aria-label="is external">
-                {% endif %}
-                <label class="form-check-label" for="exampleCheck1">External Supplier? </label>
-            </div>
+              
+                <div class="col-lg-6">
+                    <label for="External_Supplier">From External Supplier? </label>
+                    <input type="text" class="form-control" value="{{ intake.is_external | yesno:'Yes, No'}}" placeholder="External Supplier"
+                        id="External_Supplier" aria-label="External Supplier">
+                </div>
+            
         </div>
 
         <div>&nbsp;</div>

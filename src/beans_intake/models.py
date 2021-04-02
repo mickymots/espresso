@@ -11,16 +11,27 @@ class Location(models.Model):
     def __str__(self):
         return self.location
 
+class Supplier(models.Model):
+    name = models.CharField(max_length=60)
+    address = models.TextField(max_length=120, null=True)
+    phone = models.CharField(max_length=60, null=True)
+    email = models.EmailField(max_length=60, null=True)
+    is_active = models.BooleanField(default=True)
+    lot_location = models.CharField(max_length=60, null=True)
+    created_date = models.DateField(default=timezone.now)
 
+    def __str__(self):
+        return self.name
+        
 class Intake(models.Model):    
     supervisor_name = models.CharField(max_length=60)
     lot_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
     is_floated = models.BooleanField(default=False, blank=True, null=True)
     total_box_count = models.IntegerField()
-    passed_float_box_count = models.IntegerField(null=True,blank=True )
+    passed_float_box_count = models.IntegerField(default=0, null=True,blank=True )
     proof_file = models.CharField(max_length=500, null=True, blank=True)
     supervisor_signature = JSignatureField(null=True, blank=True)
-    supplier_name = models.CharField(max_length=60, null=True, blank=True)
+    supplier_name = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
     representative_name = models.CharField(max_length=60, null=True, blank=True)
     representative_signature = JSignatureField(null=True, blank=True)
     is_external = models.BooleanField(default=False)
@@ -53,17 +64,7 @@ class DryingBatch(models.Model):
     created_date = models.DateField(default=timezone.now)
     batch = models.ForeignKey(Batch, on_delete=models.SET_NULL, null=True)
 
-class Supplier(models.Model):
-    name = models.CharField(max_length=60)
-    address = models.TextField(max_length=120, null=True)
-    phone = models.CharField(max_length=60, null=True)
-    email = models.EmailField(max_length=60, null=True)
-    is_active = models.BooleanField(default=True)
-    lot_location = models.CharField(max_length=60, null=True)
-    created_date = models.DateField(default=timezone.now)
 
-    def __str__(self):
-        return self.name
 
 
 class Employee(models.Model):
