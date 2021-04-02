@@ -15,12 +15,12 @@ class Location(models.Model):
 class Intake(models.Model):    
     supervisor_name = models.CharField(max_length=60)
     lot_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
-    box_count = models.IntegerField()
-    total_weight = models.IntegerField()
-    discarded_weight = models.IntegerField()
-    refloated_weight = models.IntegerField()
-    proof_file = models.CharField(max_length=500)
-    supervisor_signature = JSignatureField()
+    is_floated = models.BooleanField(default=False, blank=True, null=True)
+    total_box_count = models.IntegerField()
+    passed_float_box_count = models.IntegerField(null=True,blank=True )
+    proof_file = models.CharField(max_length=500, null=True, blank=True)
+    supervisor_signature = JSignatureField(null=True, blank=True)
+    supplier_name = models.CharField(max_length=60, null=True, blank=True)
     representative_name = models.CharField(max_length=60, null=True, blank=True)
     representative_signature = JSignatureField(null=True, blank=True)
     is_external = models.BooleanField(default=False)
@@ -53,9 +53,27 @@ class DryingBatch(models.Model):
     created_date = models.DateField(default=timezone.now)
     batch = models.ForeignKey(Batch, on_delete=models.SET_NULL, null=True)
 
+class Supplier(models.Model):
+    name = models.CharField(max_length=60)
+    address = models.TextField(max_length=120, null=True)
+    phone = models.CharField(max_length=60, null=True)
+    email = models.EmailField(max_length=60, null=True)
+    is_active = models.BooleanField(default=True)
+    lot_location = models.CharField(max_length=60, null=True)
+    created_date = models.DateField(default=timezone.now)
 
-class Sorter(models.Model):
+    def __str__(self):
+        return self.name
+
+
+class Employee(models.Model):
     name = models.CharField(max_length=60)
     dob = models.DateField()
     is_active = models.BooleanField(default=True)
+    is_supervisor = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
+
+

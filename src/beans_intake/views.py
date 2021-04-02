@@ -28,12 +28,16 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def handle_uploaded_file(f):
-    file_name = 'uploads/'+f.name
-    with open(file_name, 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-    return file_name
+def handle_uploaded_file(request):
+    if request.FILES:
+        filedata = request.FILES["proof_file"]
+
+        file_name = 'uploads/'+filedata.name
+        with open(file_name, 'wb+') as destination:
+            for chunk in filedata.chunks():
+                destination.write(chunk)
+        return file_name
+    
 
 def get_intake_model(intake_form):
     pass
@@ -50,10 +54,9 @@ def process_intake_form(is_external, intake_form, file_name):
     
     intake = Intake(supervisor_name=intake_form.cleaned_data['supervisor_name'],  # name,
                     lot_location=intake_form.cleaned_data['lot_location'],
-                    box_count=intake_form.cleaned_data['box_count'],
-                    total_weight=intake_form.cleaned_data['total_weight'],
-                    discarded_weight=intake_form.cleaned_data['discarded_weight'],
-                    refloated_weight=intake_form.cleaned_data['refloated_weight'],
+                    total_box_count=intake_form.cleaned_data['box_count'],
+                    is_floated = intake_form.cleaned_data['is_floated'],
+                   
                     proof_file=file_name,
                     supervisor_signature=intake_form.cleaned_data['supervisor_signature'],
                     representative_name= representative_name,
@@ -61,19 +64,19 @@ def process_intake_form(is_external, intake_form, file_name):
                     is_external = is_external
                     )
                     
-    batch = Batch(location = intake.lot_location, 
-                  batch_weight = intake.total_weight - (intake.discarded_weight + intake.refloated_weight),
-                  is_second_float = False,
-                  intake = intake,
-                  status = Status.objects.get(pk=BATCH_STATUS_FLOATED)
-                )
+    # batch = Batch(location = intake.lot_location, 
+    #               batch_weight = intake.total_weight - (intake.discarded_weight + intake.refloated_weight),
+    #               is_second_float = False,
+    #               intake = intake,
+    #               status = Status.objects.get(pk=BATCH_STATUS_FLOATED)
+    #             )
 
     with transaction.atomic():
         intake.save()
-        batch.save()
-        if intake.refloated_weight > 0:
-            refloat = Refloat(intake = intake, refloat_weight = intake.refloated_weight)
-            refloat.save()
+        # batch.save()
+        # if intake.refloated_weight > 0:
+        #     refloat = Refloat(intake = intake, refloat_weight = intake.refloated_weight)
+        #     refloat.save()
                 
     intake = Intake.objects.get(pk=intake.id)
     return intake
@@ -86,7 +89,8 @@ def own_intake(request):
         intake_form = OwnIntakeForm(request.POST, request.FILES)
 
         if intake_form.is_valid():
-            file_name = handle_uploaded_file(request.FILES["proof_file"])
+            
+            file_name = handle_uploaded_file(request)
             intake = process_intake_form(False, intake_form, file_name)
 
             context['message'] = "Intake saved."
