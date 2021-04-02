@@ -1,20 +1,19 @@
 {% extends "homepage/base_template.html" %}
 
 {% block content %}
-<h1> Oubu Coffee - Coffee Drying </h1>
+<h1> Confirm move of batch to Drying </h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>Intake ID</th>
 
-            <th>Batch ID </th>
+          
 
             <th>Location</th>
 
-            <th>Batch Date</th>
+            <th>Intake Date</th>
 
-            <th>Is Second Float?</th>
 
             <th>Batch Status</th>
 
@@ -27,15 +26,13 @@
         <tr>
             <td><a href="/beans_intake/{{ item.intake.id }}"> {{item.intake.id}} </a></td>
 
-            <td>{{ item.id }}</td>
-            <td>{{ item.location }}</td>
+            <td>{{ item.intake.lot_location |default_if_none:"N/A" }}</td>
 
-            <td>{{ item.created_date }}</td>
-            <td>{{ item.is_second_float | yesno:'Yes, No'}}</td>
+            <td>{{ item.intake.created_date }}</td>
             <td>{{ item.status }}</td>
 
             <td>
-                <a href="get_batch_details/{{item.id}}/" class="btn btn-primary btn-sm">Move to next stage </a>
+                <a href="get_batch_details/{{item.intake.id}}/" class="btn btn-primary btn-sm">Move to next stage </a>
             </td>
         </tr>
 

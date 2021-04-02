@@ -6,14 +6,14 @@ from jsignature.utils import draw_signature
 from .forms.own_intake_form import OwnIntakeForm
 from .forms.supplier_intake_form import SupplierIntakeForm
 from .forms.refloat_intake_form import RefloatIntakeForm
-from .models import Intake, Location, Status, Batch, Refloat
+from .models import Intake, IntakeDetails, Location, Status, Refloat
 
 
 # Template files
 own_intake_template = 'beans_intake/own_intake.html'
 intake_details_template = 'beans_intake/intake_details.html/'
 
-BATCH_STATUS_FLOATED = 3000000
+BATCH_STATUS_INTAKE = 3000000
 BATCH_STATUS_DRYING = 3000001
 BATCH_STATUS_RESTING = 3000002
 BATCH_STATUS_PARCHMENT = 3000003
@@ -68,8 +68,12 @@ def process_intake_form(is_external, intake_form, file_name):
                     representative_name = representative_name,
                     representative_signature = representative_signature,
                     is_external = is_external
-                    )
                     
+                    )
+    intake_details = IntakeDetails(intake = intake, 
+                status = Status.objects.get(pk=BATCH_STATUS_INTAKE),
+                marker_placed = False
+            )     
     # batch = Batch(location = intake.lot_location, 
     #               batch_weight = intake.total_weight - (intake.discarded_weight + intake.refloated_weight),
     #               is_second_float = False,
@@ -79,6 +83,7 @@ def process_intake_form(is_external, intake_form, file_name):
 
     with transaction.atomic():
         intake.save()
+        intake_details.save()
         # batch.save()
         # if intake.refloated_weight > 0:
         #     refloat = Refloat(intake = intake, refloat_weight = intake.refloated_weight)

@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Intake, Location, Batch, Status, Refloat, Supplier, Employee
-admin.site.register(Batch)
+from .models import Intake, Location,  Status, Refloat, Supplier, Employee
 admin.site.register(Intake)
 admin.site.register(Location)
 admin.site.register(Refloat)

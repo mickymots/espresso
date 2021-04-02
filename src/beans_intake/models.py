@@ -22,7 +22,15 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.name
-        
+
+class Status(models.Model):
+    status = models.CharField(max_length=20)
+    status_description = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.status  
+
+
 class Intake(models.Model):    
     supervisor_name = models.CharField(max_length=60)
     lot_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
@@ -36,21 +44,17 @@ class Intake(models.Model):
     representative_signature = JSignatureField(null=True, blank=True)
     is_external = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
-
-class Status(models.Model):
-    status = models.CharField(max_length=20)
-    status_description = models.CharField(max_length=250)
-    def __str__(self):
-        return self.status   
-
-class Batch(models.Model):
-    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
-    batch_weight = models.IntegerField()
     
-    is_second_float = models.BooleanField(default=False)
-    created_date = models.DateField(default=timezone.now)
+class IntakeDetails(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
+    marker_placed = models.BooleanField(default=True)
+    is_active_status = models.BooleanField(default=True)
+    created_date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.status)
+    
 
 
 class Refloat(models.Model):
@@ -62,7 +66,7 @@ class Refloat(models.Model):
 class DryingBatch(models.Model):
     dry_coffee_weight = models.IntegerField()
     created_date = models.DateField(default=timezone.now)
-    batch = models.ForeignKey(Batch, on_delete=models.SET_NULL, null=True)
+    batch = models.CharField(max_length=60, null=True, blank=True)
 
 
 
