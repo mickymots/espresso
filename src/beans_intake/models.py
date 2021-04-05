@@ -44,6 +44,11 @@ class Intake(models.Model):
     representative_signature = JSignatureField(null=True, blank=True)
     is_external = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
+
+
+class IntakeNotes(models.Model):
+    intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
+    notes = models.TextField(max_length=500)
     
 class IntakeDetails(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)

@@ -3,8 +3,13 @@
 
 <div class="container-fluid">
     {% block content %}
-    <h1> Oubu Coffee - Intake Details </h1>
 
+    {% if intake.is_external %}
+    <h1> Suppliers Cherry Intake Details </h1>
+
+    {% else %}
+    <h1> Own Cherry Intake Details </h1>
+    {% endif %}
     <p> </p>
     <p> </p>
 
@@ -52,47 +57,58 @@
 
         {% if intake.is_floated %}
         <div class="row">
-          
+
             <div class="col-lg-6">
                 <label for="box_count">Floated Box Count </label>
-                <input type="text" class="form-control" value="{{intake.passed_float_box_count}}" placeholder="Box Count"
-                    id="box_count" aria-label="Box Count">
+                <input type="text" class="form-control" value="{{intake.passed_float_box_count}}"
+                    placeholder="Box Count" id="box_count" aria-label="Box Count">
             </div>
         </div>
-       
+
         {% endif %}
-        
+
 
         {% if intake.is_external %}
-      
-        <div class="row">
-              
-                <div class="col-lg-6">
-                    <label for="External_Supplier">From External Supplier? </label>
-                    <input type="text" class="form-control" value="{{ intake.is_external | yesno:'Yes, No'}}" placeholder="External Supplier"
-                        id="External_Supplier" aria-label="External Supplier">
-                </div>
 
-                <div class="col-lg-6">
-                    <label for="Supplier_Name">Supplier Name </label>
-                    <input type="text" class="form-control" value="{{ intake.supplier_name.name}}" placeholder="Supplier_Name"
-                        id="Supplier_Name" aria-label="Supplier_Name">
-                </div>
-            
+        <div class="row">
+
+            <div class="col-lg-6">
+                <label for="External_Supplier">From External Supplier? </label>
+                <input type="text" class="form-control" value="{{ intake.is_external | yesno:'Yes, No'}}"
+                    placeholder="External Supplier" id="External_Supplier" aria-label="External Supplier">
+            </div>
+
+            <div class="col-lg-6">
+                <label for="Supplier_Name">Supplier Name </label>
+                <input type="text" class="form-control" value="{{ intake.supplier_name.name}}"
+                    placeholder="Supplier_Name" id="Supplier_Name" aria-label="Supplier_Name">
+            </div>
+
+        </div>
+        <div>&nbsp;</div>
+
+        <div class="row">          
+
+            <div class="col">
+                <label for="intake_notes">Intake Notes </label>
+                <input type="text-area" class="form-control" value="{{ intake_notes.notes|default_if_none:'N/A'}}"
+                    placeholder="" id="intake_notes" aria-label="intake_notes">
+            </div>
+
         </div>
         <div>&nbsp;</div>
         {% endif %}
 
         <div class="row">
-           
-            
+
+
             <div class="col-lg-6">
                 <label for="External_Supplier">Batch Status </label>
-                <input type="text" class="form-control" value="{{ intake_details.status}}" placeholder="External Supplier"
-                    id="External_Supplier" aria-label="External Supplier">
+                <input type="text" class="form-control" value="{{ intake_details.status}}"
+                    placeholder="External Supplier" id="External_Supplier" aria-label="External Supplier">
             </div>
-        
-    </div>
+
+        </div>
 
 
         <div>&nbsp;</div>

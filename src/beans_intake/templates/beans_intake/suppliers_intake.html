@@ -67,11 +67,24 @@
 
         <div class="form-group row">
             <div class="col">
+                {{ notes_form.notes|as_crispy_field }}
+            </div>
+
+        </div>
+        <p>&nbsp;</p>
+
+
+        
+        <div class="form-group row">
+            <div class="col">
                 {{ form.proof_file|as_crispy_field }}
             </div>
 
         </div>
         <p>&nbsp;</p>
+
+
+        
 
         <div class="form-group row">
             <div class="col">

@@ -3,6 +3,7 @@ from django import forms
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget
 from beans_intake.models import Location, Intake, Employee
+from django.core.exceptions import ValidationError
 
 class OwnIntakeForm(forms.ModelForm): 
     
@@ -26,6 +27,23 @@ class OwnIntakeForm(forms.ModelForm):
     
     proof_file = forms.FileField(label="Picture of Batch", required = False, 
                                  widget=forms.FileInput(attrs={'class': 'form-control'})) 
+
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        total_box_count = cleaned_data.get("total_box_count")
+        passed_float_box_count = cleaned_data.get("passed_float_box_count")
+
+        if total_box_count and passed_float_box_count:
+            # Only do something if both fields are valid so far.
+            if passed_float_box_count >  total_box_count:
+                msg = "Passed float count can not be more than total box count"
+                self.add_error('passed_float_box_count', msg)
+                # raise ValidationError(
+                    
+                # )
+
 
     class Meta:
         model = Intake
