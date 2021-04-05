@@ -1,7 +1,7 @@
 {% extends "homepage/base_template.html" %}
 
 {% block content %}
-<h1> Confirm move of batch to Drying </h1>
+<h1> {{header}} </h1>
 
 <table class="table">
     <thead>
@@ -14,7 +14,10 @@
 
             <th>Batch Status</th>
 
+            <th>From Supplier?</th>
+            {% if is_actionable %}
             <th>Batch Action</th>
+            {% endif %}
 
         </tr>
     </thead>
@@ -26,11 +29,16 @@
             <td>{{ item.intake.lot_location |default_if_none:"N/A" }}</td>
 
             <td>{{ item.intake.created_date }}</td>
+
             <td>{{ item.status }}</td>
 
+            <td>{{ item.intake.is_external | yesno:'Yes, No'}}</td>
+
+            {% if is_actionable %}
             <td>
                 <a href="get_batch_details/{{item.intake.id}}/" class="btn btn-primary btn-sm">Move to next stage </a>
             </td>
+            {% endif %}
         </tr>
 
 

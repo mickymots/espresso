@@ -15,6 +15,8 @@ def index(request):
     context = {}
     query_results = IntakeDetails.objects.all().filter(status=Status.objects.get(pk=BATCH_STATUS_INTAKE)).filter(is_active_status=True)
     context['query_results'] = query_results
+    context['header'] = 'List Of Intake Batches'
+    context['is_actionable'] = True
     return render(request, template, context=context)
 
 
@@ -52,8 +54,18 @@ def update_batch_status(request):
     context = {}
     # query_results = Intake.objects.all()
     # context['query_results'] = query_results
-    return redirect('index')
+    return redirect('get_batch_with_status', batch_status='DRYING')
 
+def get_batch_with_status(request, batch_status):
+    template = 'dry_coffee/index.html'
+    context = {}
+    if batch_status == 'DRYING':
+        status=Status.objects.get(pk=BATCH_STATUS_DRYING)
+        query_results = IntakeDetails.objects.all().filter(is_active_status=True, status=status)
+    context['query_results'] = query_results
+    context['header'] = 'List Of Drying Batches'
+    context['is_actionable'] = False
+    return render(request, template, context=context)
 
 
 def get_batch_details(request, batch_id):

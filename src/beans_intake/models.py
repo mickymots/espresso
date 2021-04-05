@@ -37,13 +37,24 @@ class Intake(models.Model):
     is_floated = models.BooleanField(default=False, blank=True, null=True)
     total_box_count = models.IntegerField()
     passed_float_box_count = models.IntegerField(default=0, null=True,blank=True )
-    proof_file = models.CharField(max_length=500, null=True, blank=True)
+    
     supervisor_signature = JSignatureField(null=True, blank=True)
     supplier_name = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
     representative_name = models.CharField(max_length=60, null=True, blank=True)
     representative_signature = JSignatureField(null=True, blank=True)
     is_external = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
+
+class IntakeFiles(models.Model):
+    intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
+    proof_file = models.FileField(upload_to='documents/', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.proof_file)
+
+class IntakeNotes(models.Model):
+    intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
+    notes = models.TextField(max_length=500)
     
 class IntakeDetails(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
