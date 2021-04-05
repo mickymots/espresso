@@ -5,8 +5,13 @@ from jsignature.widgets import JSignatureWidget
 from beans_intake.models import Location, Intake, Employee
 from django.core.exceptions import ValidationError
 
+# Template files
+own_intake_template = 'beans_intake/own_intake.html'
+intake_details_template = 'beans_intake/intake_details.html/'
+
+
 class OwnIntakeForm(forms.ModelForm): 
-    
+
     supervisor_name = forms.ModelChoiceField(label="Supervisor Name",
                                  queryset=Employee.objects.all().filter(is_supervisor=True), widget=forms.Select(attrs={'class':'form-control'}))
 
@@ -25,9 +30,8 @@ class OwnIntakeForm(forms.ModelForm):
 
     supervisor_signature = JSignatureField(label="Supervisor Signature")
     
-    proof_file = forms.FileField(label="Picture of Batch", required = False, 
-                                 widget=forms.FileInput(attrs={'class': 'form-control'})) 
-
+                                 
+    proof_file = forms.FileField(label="Pictures of Batch", widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}))
 
 
     def clean(self):
@@ -41,7 +45,6 @@ class OwnIntakeForm(forms.ModelForm):
                 msg = "Passed float count can not be more than total box count"
                 self.add_error('passed_float_box_count', msg)
                
-
 
     class Meta:
         model = Intake

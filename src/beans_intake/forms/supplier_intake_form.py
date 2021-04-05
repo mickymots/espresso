@@ -23,8 +23,7 @@ class SupplierIntakeForm(forms.ModelForm):
     is_floated = forms.BooleanField(label="Floated?", required = False,
                                   widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id':"is_floated"}))
 
-    proof_file = forms.FileField(label="Picture of Batch",
-                                 widget=forms.FileInput(attrs={'class': 'form-control'})) 
+    proof_file = forms.FileField(label="Pictures of Batch", widget=forms.ClearableFileInput(attrs={'multiple': True, 'class': 'form-control'}))
 
     supervisor_signature = JSignatureField(label="Supervisor Signature")
 

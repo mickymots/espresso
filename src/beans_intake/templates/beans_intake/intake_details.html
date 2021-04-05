@@ -87,7 +87,7 @@
         </div>
         <div>&nbsp;</div>
 
-        <div class="row">          
+        <div class="row">
 
             <div class="col">
                 <label for="intake_notes">Intake Notes </label>
@@ -123,6 +123,18 @@
                 </span>
             </div>
         </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+            {% for file in uploaded_files %}
+            <a href="{{MEDIA_URL}}{{ file.proof_file }}" target="_blank"> {{ file.proof_file |cut:"documents/" }} </a>
+            {% endfor %}
+
+
+        </div>
+
+
 
 
 
