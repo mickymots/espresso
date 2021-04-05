@@ -33,6 +33,18 @@ class SupplierIntakeForm(forms.ModelForm):
 
     representative_signature = JSignatureField(label="Seller Rep. Signature")
 
+    def clean(self):
+        cleaned_data = super().clean()
+        total_box_count = cleaned_data.get("total_box_count")
+        passed_float_box_count = cleaned_data.get("passed_float_box_count")
+
+        if total_box_count and passed_float_box_count:
+            # Only do something if both fields are valid so far.
+            if passed_float_box_count >  total_box_count:
+                msg = "Passed float count can not be more than total box count"
+                self.add_error('passed_float_box_count', msg)
+
+
     class Meta:
         model = Intake
         fields = [

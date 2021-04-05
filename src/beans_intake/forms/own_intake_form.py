@@ -40,9 +40,7 @@ class OwnIntakeForm(forms.ModelForm):
             if passed_float_box_count >  total_box_count:
                 msg = "Passed float count can not be more than total box count"
                 self.add_error('passed_float_box_count', msg)
-                # raise ValidationError(
-                    
-                # )
+               
 
 
     class Meta:
