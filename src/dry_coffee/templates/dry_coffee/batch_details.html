@@ -1,10 +1,10 @@
 {% extends "homepage/base_template.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h1> Confirm move to drying </h1>
+<h1> Confirm move to {{next_status.status}} </h1>
 
 
-<form action="/dry_coffee/update_batch_status/" method="POST">
+<form action="/dry_coffee/update_batch_status/" enctype="multipart/form-data" method="POST">
     <div>&nbsp;</div>
     <div class="col-lg-6">
         <fieldset disabled>
@@ -53,9 +53,7 @@
                         id="batch_status" aria-label="Intake Status" />
                 </div>
                 <div class="col">
-                    <!-- <label for="second_float">Is Second Float?</label>
-                    <input type="text" class="form-control" value="{{batch.is_second_float|yesno:'Yes,No'}}"
-                        placeholder="Location" id="second_float" aria-label="second_float"> -->
+                    
                 </div>
             </div>
     
@@ -65,11 +63,47 @@
 
             <div>&nbsp;</div>
 
-            <div class="row">
+            
+
+            {% if next_status.status == 'DRYING' %}
+                <div class="row">
+                    <div class="col">
+                        {{ form.is_marker_placed|as_crispy_field }}
+                    </div>
+                </div>
+
+            {% elif next_status.status == 'RESTING' %}
+
+                <div class="col">
+                    {{ form.supervisor_name|as_crispy_field }}
+                </div>
+
+                <div>&nbsp;</div>
+                <div class="row">
+
+                    <div class="col">
+                        {{ form.full_bags_count|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.partial_bag_weight|as_crispy_field }}
+                    </div>
+                    
+                </div>
+               
+                
+                <div>&nbsp;</div>
+
                 <div class="col">
                     {{ form.is_marker_placed|as_crispy_field }}
                 </div>
-            </div>
+
+                <div>&nbsp;</div>
+                <div class="col">
+                    {{ form.proof_file|as_crispy_field }}
+                </div>
+
+            {% endif %}
 
             <p>&nbsp;</p>
 
