@@ -24,3 +24,4 @@ docker-compose -f docker-compose.yml --env-file=dev.env up -d
 # Static file
 
    * docker exec espresso-web /bin/sh -c "python manage.py collectstatic --noinput"
+   * docker exec espresso-web /bin/sh -c "python manage.py createsuperuser"

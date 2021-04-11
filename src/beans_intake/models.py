@@ -23,12 +23,24 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
+
 class Status(models.Model):
     status = models.CharField(max_length=20)
     status_description = models.CharField(max_length=250)
 
     def __str__(self):
         return self.status  
+
+
+class Employee(models.Model):
+    name = models.CharField(max_length=60)
+    dob = models.DateField()
+    is_active = models.BooleanField(default=True)
+    is_supervisor = models.BooleanField(default=False)
+    created_date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
 
 
 class Intake(models.Model):    
@@ -45,6 +57,7 @@ class Intake(models.Model):
     is_external = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
 
+
 class IntakeFiles(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
     proof_file = models.FileField(upload_to='documents/', blank=True, null=True)
@@ -52,10 +65,12 @@ class IntakeFiles(models.Model):
     def __str__(self):
         return str(self.proof_file)
 
+
 class IntakeNotes(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
     notes = models.TextField(max_length=500)
-    
+
+
 class IntakeDetails(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
@@ -65,7 +80,23 @@ class IntakeDetails(models.Model):
 
     def __str__(self):
         return str(self.status)
-    
+
+
+class Inventory(models.Model):
+    intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
+    supervisor_name = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    full_bags = models.IntegerField(default=0, null=True, blank=True)
+    partial_bag_weight = models.IntegerField(default=0, null=True, blank=True)
+    marker_placed = models.BooleanField(default=True)
+    created_date = models.DateField(default=timezone.now)
+
+
+class InventoryFiles(models.Model):
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    proof_file = models.FileField(upload_to='documents/', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.proof_file)
 
 
 class Refloat(models.Model):
@@ -73,6 +104,7 @@ class Refloat(models.Model):
     refloat_weight = models.IntegerField()
     floated = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
+
 
 class DryingBatch(models.Model):
     dry_coffee_weight = models.IntegerField()
@@ -82,14 +114,6 @@ class DryingBatch(models.Model):
 
 
 
-class Employee(models.Model):
-    name = models.CharField(max_length=60)
-    dob = models.DateField()
-    is_active = models.BooleanField(default=True)
-    is_supervisor = models.BooleanField(default=False)
-    created_date = models.DateField(default=timezone.now)
 
-    def __str__(self):
-        return self.name
 
 
