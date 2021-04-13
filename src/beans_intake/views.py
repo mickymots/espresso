@@ -10,7 +10,7 @@ from .forms.own_intake_form import OwnIntakeForm
 from .forms.supplier_intake_form import SupplierIntakeForm
 from .forms.supplier_intake_notes_form import SupplierIntakeNotesForm
 from .forms.refloat_intake_form import RefloatIntakeForm
-from .models import Intake, IntakeDetails, Location, Status, Refloat, IntakeNotes,IntakeFiles
+from .models import Intake, IntakeDetails, Location, Status, Refloat, IntakeNotes,IntakeFiles, Inventory, InventoryFiles
 
 
 
@@ -96,8 +96,13 @@ def get_intake_details(request, intake_id):
         try:
             uploaded_files = IntakeFiles.objects.all().filter(intake=intake)
         except ObjectDoesNotExist as e:
-            print(e)
             uploaded_files = None
+        try:
+            inventory = Inventory.objects.get(intake=intake)
+            inventory_files = InventoryFiles.objects.all().filter(inventory=inventory)
+        except ObjectDoesNotExist as e:
+            inventory = None
+            inventory_files =None
     except ObjectDoesNotExist:
         intake_details = None
         intake_notes  = None
@@ -105,7 +110,8 @@ def get_intake_details(request, intake_id):
 
     except Intake.DoesNotExist:
         raise Http404("Intake does not exist")
-    return render(request, intake_details_template, {'intake': intake, 'intake_details': intake_details, 'intake_notes':intake_notes, 'uploaded_files': uploaded_files})
+    return render(request, intake_details_template, {'intake': intake, 'intake_details': intake_details, 
+        'intake_notes':intake_notes, 'uploaded_files': uploaded_files, 'inventory': inventory,'inventory_files': inventory_files})
 
 
 

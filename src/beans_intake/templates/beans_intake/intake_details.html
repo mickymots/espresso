@@ -134,9 +134,58 @@
 
         </div>
 
+        {% if inventory %}
+        <hr>
+        <h2> Inventory Details ID - {{inventory.id}}</h2>
+
+        <div class="row">
+
+            <div class="col-6">
+                <label for="intake_notes">Supervisor </label>
+                <input type="text-area" class="form-control" value="{{ inventory.supervisor_name}}"
+                    placeholder="" id="intake_notes" aria-label="intake_notes">
+            </div>
+
+        </div>
 
 
+        <div class="row">
 
+            <div class="col-3">
+                <label for="intake_notes">Full Bags </label>
+                <input type="text-area" class="form-control" value="{{ inventory.full_bags}}"
+                    placeholder="" id="intake_notes" aria-label="intake_notes">
+            </div>
+            <div class="col-3">
+                <label for="intake_notes">Partial Bags </label>
+                <input type="text-area" class="form-control" value="{{ inventory.partial_bag_weight|default_if_none:0}}"
+                    placeholder="" id="intake_notes" aria-label="intake_notes">
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-3">
+                <label for="intake_notes">Moisture Content </label>
+                <input type="text-area" class="form-control" value="{{ inventory.moisture_content}}"
+                    placeholder="" id="intake_notes" aria-label="intake_notes">
+            </div>
+            <div class="col-3">
+                <label for="intake_notes">Created Date </label>
+                <input type="text-area" class="form-control" value="{{ inventory.created_date}}"
+                    placeholder="" id="intake_notes" aria-label="intake_notes">
+            </div>
+
+        </div>
+
+        <div class="row">
+            {% for ifile in inventory_files %}
+            <a href="{{MEDIA_URL}}{{ ifile.proof_file }}" target="_blank"> {{ ifile.proof_file }} </a>
+            {% endfor %}
+
+        </div>
+        {% endif %}
 
     </fieldset>
 
