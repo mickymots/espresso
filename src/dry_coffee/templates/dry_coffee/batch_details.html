@@ -8,126 +8,133 @@
     <div>&nbsp;</div>
     <div class="col-lg-6">
         <fieldset disabled>
-       
+
             <legend>Intake Details - {{batch.intake.id}}</legend>
             <div>&nbsp;</div>
             <div class="row">
-    
+
                 <div class="col">
                     <label for="batch_id">Intake ID</label>
-                    <input type="text" class="form-control" value="{{batch.intake.id}}" placeholder="Intake ID" id="batch_id"
-                        aria-label="Intake ID" />
+                    <input type="text" class="form-control" value="{{batch.intake.id}}" placeholder="Intake ID"
+                        id="batch_id" aria-label="Intake ID" />
                 </div>
                 <div class="col">
                     <label for="Location">Location</label>
-                    <input type="text" class="form-control" value="{{ batch.intake.lot_location|default_if_none:'N/A' }}" placeholder="Location" id="Location"
-                        aria-label="Location">
+                    <input type="text" class="form-control"
+                        value="{{ batch.intake.lot_location|default_if_none:'N/A' }}" placeholder="Location"
+                        id="Location" aria-label="Location">
                 </div>
             </div>
-    
+
             <div>&nbsp;</div>
             <div class="row">
-    
+
                 <div class="col">
                     <label for="batch_created_date">Intake Created Date</label>
-                    <input type="text" class="form-control" value="{{batch.intake.created_date}}" placeholder="Intake Created Date"
-                        id="batch_created_date" aria-label="Intake Created Date" />
+                    <input type="text" class="form-control" value="{{batch.intake.created_date}}"
+                        placeholder="Intake Created Date" id="batch_created_date" aria-label="Intake Created Date" />
                 </div>
                 <div class="col">
-    
+
                     <label for="batch_created_date">From Supplier? </label>
-                    <input type="text" class="form-control" value="{{batch.intake.is_external | yesno:'Yes, No' }}" placeholder="Intake Created Date"
-                        id="batch_created_date" aria-label="Intake Created Date" />
+                    <input type="text" class="form-control" value="{{batch.intake.is_external | yesno:'Yes, No' }}"
+                        placeholder="Intake Created Date" id="batch_created_date" aria-label="Intake Created Date" />
                 </div>
-                    
-    
+
+
             </div>
-           
-    
+
+
             <div>&nbsp;</div>
             <div class="row">
-    
+
                 <div class="col">
                     <label for="batch_status">Batch Status</label>
                     <input type="text" class="form-control" value="{{batch.status}}" placeholder="Intake Status"
                         id="batch_status" aria-label="Intake Status" />
                 </div>
                 <div class="col">
-                    
-                </div>
-            </div>
-    
-        </fieldset>   
 
-            <input type="hidden" value="{{batch.intake.id}}" name="batch_id" />
-
-            <div>&nbsp;</div>
-
-            
-
-            {% if next_status.status == 'DRYING' %}
-                <div class="row">
-                    <div class="col">
-                        {{ form.is_marker_placed|as_crispy_field }}
-                    </div>
-                </div>
-
-            {% elif next_status.status == 'RESTING' %}
-
-                <div class="col">
-                    {{ form.supervisor_name|as_crispy_field }}
-                </div>
-
-                <div>&nbsp;</div>
-                <div class="row">
-
-                    <div class="col">
-                        {{ form.full_bags_count|as_crispy_field }}
-                    </div>
-    
-                    <div class="col">
-                        {{ form.partial_bag_weight|as_crispy_field }}
-                    </div>
-                    
-                </div>
-               
-                
-                <div>&nbsp;</div>
-
-                <div class="col">
-                    {{ form.is_marker_placed|as_crispy_field }}
-                </div>
-
-                <div>&nbsp;</div>
-                <div class="col">
-                    {{ form.proof_file|as_crispy_field }}
-                </div>
-
-            {% endif %}
-
-            <p>&nbsp;</p>
-
-
-            <div class="row">
-                <div class="col-3">
-                    <a href="/dry_coffee/" class="btn btn-outline-primary btn-lg">Cancel</a>
-                </div>
-
-                <div class="col-6">
-
-                    <button type="submit" class="btn btn-primary btn-lg">Move to {{next_status.status}} Status</a>
                 </div>
             </div>
 
-    
+        </fieldset>
 
-        
-    
-    
+        <input type="hidden" value="{{batch.intake.id}}" name="batch_id" />
+
+        <div>&nbsp;</div>
+
+
+
+        {% if next_status.status == 'DRYING' %}
+        <div class="row">
+            <div class="col">
+                {{ form.is_marker_placed|as_crispy_field }}
+            </div>
+        </div>
+
+        {% elif next_status.status == 'RESTING' %}
+
+        <div class="col">
+            {{ form.supervisor_name|as_crispy_field }}
+        </div>
+
+        <div>&nbsp;</div>
+        <div class="row">
+
+            <div class="col">
+                {{ form.full_bags_count|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.partial_bag_weight|as_crispy_field }}
+            </div>
+
+        </div>
+
+
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col">
+                {{ form.is_marker_placed|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.moisture_content|as_crispy_field }}
+            </div>
+
+        </div>
+
+        <div>&nbsp;</div>
+        <div class="col">
+            {{ form.proof_file|as_crispy_field }}
+        </div>
+
+        {% endif %}
+
+        <p>&nbsp;</p>
+
+
+        <div class="row">
+            <div class="col-3">
+                <a href="/dry_coffee/" class="btn btn-outline-primary btn-lg">Cancel</a>
+            </div>
+
+            <div class="col-6">
+
+                <button type="submit" class="btn btn-primary btn-lg">Move to {{next_status.status}} Status</a>
+            </div>
+        </div>
+
+
+
+
+
+
     </div>
-    
 
-        {% csrf_token %}
+
+    {% csrf_token %}
 
 </form>
 

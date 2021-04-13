@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist 
@@ -10,6 +11,8 @@ from .forms.supplier_intake_form import SupplierIntakeForm
 from .forms.supplier_intake_notes_form import SupplierIntakeNotesForm
 from .forms.refloat_intake_form import RefloatIntakeForm
 from .models import Intake, IntakeDetails, Location, Status, Refloat, IntakeNotes,IntakeFiles
+
+
 
 
 # Template files
@@ -29,7 +32,6 @@ def index(request):
         'message': [],
     }
     return HttpResponse(template.render(context, request))
-
 
 
 
@@ -64,9 +66,10 @@ def own_intake(request):
             
             intake = process_intake_form(False, intake_form)
 
-            for f in proof_files:
-                 proof_file = IntakeFiles(intake= intake, proof_file=f)
-                 proof_file.save()
+            for file_obj in proof_files:
+            
+                proof_file = IntakeFiles(intake= intake, proof_file=file_obj)
+                proof_file.save()
 
             return redirect('intake_details', intake_id=intake.id)
         else:
