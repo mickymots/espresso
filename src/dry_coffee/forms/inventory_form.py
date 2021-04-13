@@ -18,6 +18,9 @@ class InvetoryForm(forms.ModelForm):
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0, max_value=24)
 
+    moisture_content = forms.FloatField(label="Moisture Content", required = True,
+                                  widget=forms.NumberInput(attrs={'class': 'form-control'}),
+                                  min_value = 0)
 
     is_marker_placed = forms.BooleanField(label="Have placed marker at batch?", 
                                   widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id':"is_marker_placed"}))
@@ -29,4 +32,4 @@ class InvetoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
         exclude = ('intake',)
-        fields = [ "supervisor_name", "full_bags_count", "partial_bag_weight", "is_marker_placed", "proof_file" ]
+        fields = [ "supervisor_name", "full_bags_count", "partial_bag_weight", "moisture_content", "is_marker_placed", "proof_file" ]
