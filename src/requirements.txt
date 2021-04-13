@@ -3,4 +3,6 @@ psycopg2-binary>=2.8
 django-jsignature
 gunicorn
 django-crispy-forms
+django-storages
+boto3
 

@@ -3,6 +3,9 @@ from django.db import models
 from jsignature.fields import JSignatureField
 from datetime import datetime
 from django.utils import timezone
+from datetime import date
+
+today = date.today()
 
 
 class Location(models.Model):
@@ -57,10 +60,13 @@ class Intake(models.Model):
     is_external = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
 
+    def _str__(self):
+        return str(self.id)
+
 
 class IntakeFiles(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
-    proof_file = models.FileField(upload_to='documents/', blank=True, null=True)
+    proof_file = models.FileField(upload_to=f'intake-files')
 
     def __str__(self):
         return str(self.proof_file)
@@ -94,7 +100,7 @@ class Inventory(models.Model):
 
 class InventoryFiles(models.Model):
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
-    proof_file = models.FileField(upload_to='documents/', blank=True, null=True)
+    proof_file = models.FileField(upload_to=f'inventory-files', blank=True, null=True)
 
     def __str__(self):
         return str(self.proof_file)

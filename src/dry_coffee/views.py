@@ -1,9 +1,11 @@
+import os
 from django.shortcuts import render, redirect, reverse
 
-# Create your views here.
-# Create your views here.
 from django.http import HttpResponse
 from django.template import loader
+from django.http import JsonResponse
+
+
 # from .batch_form import BatchForm
 from .forms.coffee_dry_form import CoffeeDryForm
 from .forms.inventory_form import InvetoryForm
@@ -59,11 +61,7 @@ def processResting(request, intake):
 
     proof_files = request.FILES.getlist('proof_file')
 
-    # print(f'inventory_form.is_valid()= {intake}')
-
-    # print(f'inventory_form.is_valid()= {inventory_form}')
-
-
+    
     if inventory_form.is_valid():
         
         inventory = inventory_form.save(commit=False)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', 
     'crispy_forms',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'espresso.wsgi.application'
+AWS_ACCESS_KEY_ID='TOZSQJUP2D6RDGAECSBW'
+AWS_SECRET_ACCESS_KEY='qcDxNLywKEE+HNsxG1/sWxqjCTR7ulYmTZn7km7irUY'
+AWS_STORAGE_BUCKET_NAME='obou'
+AWS_S3_REGION_NAME='nyc3'
+AWS_S3_ENDPOINT_URL='https://obou.nyc3.digitaloceanspaces.com'
+AWS_DEFAULT_ACL = 'public-read'
 
-
+# DEFAULT_FILE_STORAGE = 'beans_intake.custom_storage.MediaStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -133,9 +141,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR, "static") 
 
-
-MEDIA_URL = '/uploads/'
-MEDIA_ROOT=os.path.join(BASE_DIR, "uploads") 
+MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/'
+# MEDIA_URL = '/uploads/'
+# MEDIA_ROOT=os.path.join(BASE_DIR, "uploads") 
 
 # settings.py
 JSIGNATURE_WIDTH = 400
