@@ -1,3 +1,6 @@
+[![Publish Docker image](https://github.com/mickymots/espresso/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/mickymots/espresso/actions/workflows/publish.yml)
+
+
 # A Django and Postgres project setup in Docker
 
 
