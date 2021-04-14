@@ -3,9 +3,7 @@ from django.db import models
 from jsignature.fields import JSignatureField
 from datetime import datetime
 from django.utils import timezone
-from datetime import date
 
-today = date.today()
 
 
 class Location(models.Model):
