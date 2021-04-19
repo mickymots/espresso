@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="col-lg-6">
+<div class="col-md">
     <h1 class="display-4">Suppliers Cherry Intake</h1>
 
     {{ form.media }}
@@ -54,11 +54,11 @@
 
         <div class="form-group row">
 
-            <div class="col-6">
+            <div class="col">
                 {{ form.supervisor_signature|as_crispy_field }}
             </div>
 
-            <div class="col-6">
+            <div class="col">
                 {{ form.representative_signature|as_crispy_field }}
             </div>
 
