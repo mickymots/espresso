@@ -30,7 +30,7 @@ class SupplierIntakeForm(forms.ModelForm):
     representative_name = forms.CharField(label="Seller Rep. Name",
                            widget=forms.TextInput(attrs={'class': 'form-control'}) )
 
-    representative_signature = JSignatureField(label="Seller Rep. Signature")
+    representative_signature = JSignatureField(label="Seller Rep. Signature ")
 
     def clean(self):
         cleaned_data = super().clean()
