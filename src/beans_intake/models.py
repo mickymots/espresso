@@ -14,9 +14,9 @@ class Location(models.Model):
 
 class Supplier(models.Model):
     name = models.CharField(max_length=60)
-    address = models.TextField(max_length=120, null=True)
-    phone = models.CharField(max_length=60, null=True)
-    email = models.EmailField(max_length=60, null=True)
+    address = models.TextField(max_length=120, null=True, blank=True)
+    phone = models.CharField(max_length=60, null=True, blank=True)
+    email = models.EmailField(max_length=60, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     lot_location = models.CharField(max_length=60, null=True)
     created_date = models.DateField(default=timezone.now)
