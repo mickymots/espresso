@@ -1,17 +1,17 @@
 {% extends "homepage/base_template.html" %}
+{% load crispy_forms_tags %}
 {% load jsignature_filters %}
 
 <div class="container-fluid">
     {% block content %}
 
-    <h1> Coffee Intake Details </h1>
+    <h1> Parchment Intake Details {{intake.id}} </h1>
     <p> </p>
     <p> </p>
 
 
     <fieldset disabled>
 
-        <legend>Coffee Intake Details {{intake.id}}</legend>
 
         <div class="row">
 
@@ -21,7 +21,7 @@
                     id="name" aria-label="Supervisor name" />
             </div>
             <div class="col-lg-6">
-                <label for="supplier">supplier</label>
+                <label for="supplier">Supplier</label>
                 <input type="text" class="form-control" value="{{intake.supplier}}" placeholder="supplier" id="supplier"
                     aria-label="supplier">
             </div>
@@ -31,22 +31,22 @@
         <div class="row">
 
             <div class="col">
-                <label for="intake_date">Resting Period</label>
+                <label for="intake_date">Number of weeks rested upon receipt</label>
                 <input type="text" class="form-control" value="{{intake.resting_period}}" placeholder="Intake Date"
                     id="intake_date" aria-label="Intake Date">
             </div>
             <div class="col">
-                <label for="box_count">Box Count </label>
+                <label for="box_count">Total Bags Count </label>
                 <input type="text" class="form-control" value="{{intake.total_bags_count}}" placeholder="Box Count"
                     id="box_count" aria-label="Box Count">
             </div>
             <div class="col">
-                <label for="box_count">Box Count </label>
+                <label for="box_count">Total Weight KGS</label>
                 <input type="text" class="form-control" value="{{intake.total_weight}}" placeholder="Box Count"
                     id="box_count" aria-label="Box Count">
             </div>
             <div class="col">
-                <label for="box_count">Box Count </label>
+                <label for="box_count">Moisture Content </label>
                 <input type="text" class="form-control" value="{{intake.moisture_content}}" placeholder="Box Count"
                     id="box_count" aria-label="Box Count">
             </div>
@@ -67,6 +67,18 @@
                 <input type="text" class="form-control" value="{{intake.delivery_person_name}}" placeholder="Box Count"
                     id="Delivery_Person" aria-label="Delivery Person">
             </div>
+        </div>
+
+
+        <div>&nbsp;</div>
+        <div class="row">
+
+            <div class="col">
+                <label for="intake_note">Intake Note</label>
+                <input type="text" class="form-control" value="{{intake.intake_note}}" placeholder="Intake Note"
+                    id="intake_date" aria-label="Intake Note">
+            </div>
+
         </div>
 
 
@@ -113,11 +125,20 @@
         <div>&nbsp;</div>
 
         <div class="row">
+            <div class="col-md-6">
             <h6> Delivery Proof Files </h6>
             {% for ifile in proof_files %}
             <a href="{{MEDIA_URL}}{{ ifile.proof_file }}" target="_blank"> {{ ifile.proof_file }} </a>
             {% endfor %}
+        </div>
 
+        <div class="col-md-6">
+            <div class="col">
+                <h6>Have you added ID number to batch?</h6>
+                {{ intake.marker_placed| yesno:'Yes, No' }}
+            </div>
+         
+        </div>
         </div>
 
     </fieldset>
