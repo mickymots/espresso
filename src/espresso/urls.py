@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     path('', include('homepage.urls')),    
     path('parchment_intake/', include('parchment_intake.urls')),
+    path('green_beans_intake/', include('green_beans_intake.urls')),
     path('beans_intake/', include('beans_intake.urls')),
     path('dry_coffee/', include('dry_coffee.urls')),    
     path('admin/', admin.site.urls),

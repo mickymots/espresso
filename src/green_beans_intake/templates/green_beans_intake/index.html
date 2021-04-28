@@ -1,0 +1,43 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+ <h1> Green Beans Dashboard</h1>
+
+ <table class="table">
+    <thead>
+    <tr>
+        <th>Green Beans Intake ID</th>
+        
+        <th>Intake Person</th>
+
+        <th>Supplier</th>
+        
+        <th>Resting Period</th>
+
+        <th>Moisture Content</th>
+
+        <th>Intake Date</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in query_results %}
+    <tr> 
+        <td><a href="{{ item.id }}"> {{item.id}}  </a></td> 
+        
+        <td>{{ item.supervisor }}</td>
+
+        <td>{{ item.supplier |default_if_none:"N/A" }}</td>
+
+        
+        <td>{{ item.resting_period }}</td>
+        <td>{{ item.moisture_content }}</td>
+
+        <td>{{ item.created_date }}</td>
+        
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

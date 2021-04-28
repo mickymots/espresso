@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'parchment_intake.apps.ParchmentIntakeConfig',
     'dry_coffee.apps.DryCoffeeConfig',
     'beans_intake.apps.BeansIntakeConfig',
+    'green_beans_intake.apps.GreenBeansIntakeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +46,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'storages',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
