@@ -29,6 +29,11 @@ class GreenBeansIntakeForm(forms.ModelForm):
         labels = {
             "supervisor": "Supervisor Name",
             "supplier": "Supplier Name",
+            "grade1_weight": "Grade1 Weight(kgs)",
+            "grade2_weight": "Grade2 Weight(kgs)",
+            "grade3_weight": "Grade3 Weight(kgs)",
+            "grade_pb_weight": "Grade PB Weight(kgs)",
+            "grade_fines_weight": "Grade Fines Weight(kgs)",
             "resting_period": "Enter number of weeks rested upon receipt"
         }
        
