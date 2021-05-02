@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'dry_coffee.apps.DryCoffeeConfig',
     'beans_intake.apps.BeansIntakeConfig',
     'green_beans_intake.apps.GreenBeansIntakeConfig',
+    'reports.apps.ReportsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

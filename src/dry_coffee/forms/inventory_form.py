@@ -14,9 +14,9 @@ class InvetoryForm(forms.ModelForm):
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0)
 
-    partial_bag_weight = forms.IntegerField(label="Partial bag weight (Kg.)", required = False,
+    partial_bag_weight = forms.FloatField(label="Partial bag weight (Kgs)", required = False,
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
-                                  min_value = 0, max_value=24)
+                                  min_value = 0.0, max_value=24.99)
 
     moisture_content = forms.FloatField(label="Moisture Content", required = True,
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
