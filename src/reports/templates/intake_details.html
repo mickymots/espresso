@@ -157,7 +157,7 @@
                     placeholder="" id="intake_notes" aria-label="intake_notes">
             </div>
             <div class="col-3">
-                <label for="intake_notes">Partial Bags (Kgs) </label>
+                <label for="intake_notes">Partial Bags </label>
                 <input type="text-area" class="form-control" value="{{ inventory.partial_bag_weight|default_if_none:0}}"
                     placeholder="" id="intake_notes" aria-label="intake_notes">
             </div>
@@ -189,6 +189,11 @@
 
     </fieldset>
 
+    <div>&nbsp;</div>
+
+    <div class="col-3">
+        <a href="/reports/{{batch_status}}" class="btn btn-outline-primary btn-lg">Back</a>
+    </div>
 
     {% endblock %}
 

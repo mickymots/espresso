@@ -90,7 +90,7 @@ class Inventory(models.Model):
     intake = models.ForeignKey(Intake, on_delete=models.CASCADE)
     supervisor_name = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     full_bags = models.IntegerField(default=0, null=True, blank=True)
-    partial_bag_weight = models.IntegerField(default=0, null=True, blank=True)
+    partial_bag_weight = models.FloatField(default=0.00, null=True, blank=True)
     moisture_content = models.FloatField(default=0, null=True, blank=True)    
     marker_placed = models.BooleanField(default=True)
     created_date = models.DateField(default=timezone.now)

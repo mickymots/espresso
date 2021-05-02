@@ -24,5 +24,6 @@ urlpatterns = [
     path('green_beans_intake/', include('green_beans_intake.urls')),
     path('beans_intake/', include('beans_intake.urls')),
     path('dry_coffee/', include('dry_coffee.urls')),    
+    path('reports/', include('reports.urls')),    
     path('admin/', admin.site.urls),
 ]
