@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'beans_intake.apps.BeansIntakeConfig',
     'green_beans_intake.apps.GreenBeansIntakeConfig',
     'reports.apps.ReportsConfig',
+    'haul_grade.apps.HaulGradeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
