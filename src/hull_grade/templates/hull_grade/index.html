@@ -2,7 +2,7 @@
 
 
 {% block content %}
- <h1> Hauling and Grading  </h1>
+ <h1> Hulling and Grading  </h1>
 
 <p>&nbsp;</p>
 <h3>Batches from Cherry Intake</h3>
@@ -11,6 +11,8 @@
     <thead>
     <tr>
         <th> Intake ID </th>
+
+        <th>  Supplier </th>
         
         <th>  Location </th>
 
@@ -18,21 +20,26 @@
 
         <th>  Partial Bag Weight </th>
 
-        <th>Intake Date</th>
+        <th>  Resting Period </th>
+
+        <th> Intake Date </th>
 
     </tr>
     </thead>
     <tbody>
     {% for item in inventory %}
     <tr> 
-        <td><a href="{{ item.intake.id }}"> {{item.id}}  </a></td> 
+        <td><a href="CH/{{ item.intake.id }}"> {{item.intake.id}}  </a></td> 
         
-        <td>{{ item.intake.lot_location }}</td>
+        <td>{{ item.intake.supplier_name|default_if_none:"Self"  }}</td>
 
+        <td>{{ item.intake.lot_location }}</td>
+        
         <td>{{ item.full_bags  }}</td>
 
-        
         <td>{{ item.partial_bag_weight }}</td>
+
+        <td>{{ item.created_date |timesince }}</td>
       
 
         <td>{{ item.created_date }}</td>
@@ -52,11 +59,11 @@
             
             <th>  Supplier </th>
     
-            <th>  resting_period </th>
-    
             <th>  Full Bags  </th>
     
             <th>  Partial Bag Weight </th>
+
+            <th>  Resting Period </th>
     
             <th>Intake Date</th>
     
@@ -65,15 +72,15 @@
         <tbody>
         {% for item in parchments %}
         <tr> 
-            <td><a href="{{ item.id }}"> {{item.id}}  </a></td> 
+            <td><a href="PH/{{ item.id }}"> {{item.id}}  </a></td> 
             
             <td>{{ item.supplier }}</td>
-    
-            <td>{{ item.resting_period }}</td>
     
             <td>{{ item.total_bags_count  }}</td>
             
             <td>{{ item.total_weight }}</td>
+
+            <td>{{ item.resting_period }}</td>
     
             <td>{{ item.created_date }}</td>
         
@@ -92,11 +99,13 @@
         
         <th>  Supplier </th>
 
-        <th>  resting_period </th>
+        
 
         <th>  Intake Type  </th>
 
         <th>  GR1|GR2|GR3|GRPB|GRF </th>
+
+        <th>  Resting Period </th>
 
         <th>Intake Date</th>
 
@@ -105,11 +114,11 @@
     <tbody>
     {% for item in green_beans %}
     <tr> 
-        <td><a href="{{ item.id }}"> {{item.id}}  </a></td> 
+        <td><a href="GB/{{ item.id }}"> {{item.id}}  </a></td> 
         
         <td>{{ item.supplier }}</td>
 
-        <td>{{ item.resting_period }}</td>
+        
 
         <td>{{ item.get_intake_type_display  }}</td>
         
@@ -119,6 +128,8 @@
 
 
         </td>
+
+        <td>{{ item.resting_period }}</td>
 
         <td>{{ item.created_date }}</td>
     

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class HaulGradeConfig(AppConfig):
+class HullGradeConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'haul_grade'
+    name = 'hull_grade'
