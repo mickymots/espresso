@@ -25,5 +25,7 @@ class Migration(migrations.Migration):
                 ('created_date', models.DateField(default=django.utils.timezone.now)),
                 ('supervisor_name', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='beans_intake.employee')),
             ],
-        ),
+        ),migrations.RunSQL(
+           'ALTER SEQUENCE hull_grade_hullgradeintake_id_seq RESTART WITH 9000000;'
+        )
     ]

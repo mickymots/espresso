@@ -29,7 +29,7 @@
     <tbody>
     {% for item in inventory %}
     <tr> 
-        <td><a href="CH/{{ item.intake.id }}"> {{item.intake.id}}  </a></td> 
+        <td><a href="CH/{{ item.id }}"> {{item.intake.id}}  </a></td> 
         
         <td>{{ item.intake.supplier_name|default_if_none:"Self"  }}</td>
 

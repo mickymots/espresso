@@ -2,11 +2,67 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
+{{ form.media }}
 
 <div class="col-md">
     <h1 class="display-4">Hulling and Grading</h1>
+    <p>
+        &nbsp;
+    </p>
+    <div class="">
 
-    {{ form.media }}
+        {% if batch_type == 'CH' %}
+        <h4> Intake ID : {{intake_detail.intake.id}} </h4>
+        <table class="table table-primary table-bordered">
+            <tr>
+
+                <th> Supplier</th>
+
+                <th> Location</th>
+
+                <th> Full Bags</th>
+
+                <th> Partial Bags</th>
+
+                <th> Resting Period</th>
+
+                <th> Intake Date</th>
+
+            </tr>
+            <tr>
+
+                <td>{{intake_detail.intake.supplier_name|default_if_none:"Self"}}</td>
+
+                <td>{{intake_detail.intake.lot_location|default_if_none:"N/A"}}</td>
+
+
+                <td> {{intake_detail.full_bags}}</td>
+
+
+                <td> {{intake_detail.partial_bag_weight}} </td>
+
+                <td>{{ intake_detail.created_date |timesince }}</td>
+
+                <td>{{ intake_detail.intake.created_date }}</td>
+
+            </tr>
+
+        </table>
+        {% else %}
+
+        <h4> Intake ID : {{intake_detail.id}} </h4>
+        {% endif %}
+
+
+    </div>
+
+    <p>
+        &nbsp;
+        <hr>
+        &nbsp;
+    </p>
+
+
     <form method="post" class="form">
 
         <div class="d-none">
@@ -14,7 +70,9 @@
             <div class="col">
                 {{ form.batch_type|as_crispy_field }}
             </div>
-       
+
+         
+
             <div class="col">
                 {{ form.intake_id|as_crispy_field }}
             </div>
@@ -27,7 +85,7 @@
             <div class="col">
                 {{ form.no_of_full_bags|as_crispy_field }}
             </div>
-       
+
             <div class="col">
                 {{ form.partial_weight|as_crispy_field }}
             </div>
@@ -35,14 +93,14 @@
         </div>
 
         <div>&nbsp;</div>
-       
+
 
         <div class="form-group row">
 
             <div class="col">
                 {{ form.supervisor_name|as_crispy_field }}
             </div>
-         
+
         </div>
 
         <p>&nbsp;</p>
@@ -51,11 +109,11 @@
 
         <div class="form-group row">
             <div class="col">
-            <input type="reset" value="Cancel" class="btn btn-outline-secondary">
-                </div>
-                <div class="col">
-            <input type="submit" value="Submit" class="btn  btn-primary">
-        </div>
+                <input type="reset" value="Cancel" class="btn btn-outline-secondary">
+            </div>
+            <div class="col">
+                <input type="submit" value="Submit" class="btn  btn-primary">
+            </div>
             {% csrf_token %}
         </div>
 
