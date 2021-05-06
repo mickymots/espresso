@@ -29,7 +29,7 @@
     <tbody>
     {% for item in inventory %}
     <tr> 
-        <td><a href="CH/{{ item.id }}"> {{item.intake.id}}  </a></td> 
+        <td><a href="grading_intake/CH/{{ item.id }}"> {{item.intake.id}}  </a></td> 
         
         <td>{{ item.intake.supplier_name|default_if_none:"Self"  }}</td>
 
@@ -72,7 +72,7 @@
         <tbody>
         {% for item in parchments %}
         <tr> 
-            <td><a href="PH/{{ item.id }}"> {{item.id}}  </a></td> 
+            <td><a href="grading_intake/PH/{{ item.id }}"> {{item.id}}  </a></td> 
             
             <td>{{ item.supplier }}</td>
     
@@ -114,7 +114,7 @@
     <tbody>
     {% for item in green_beans %}
     <tr> 
-        <td><a href="GB/{{ item.id }}"> {{item.id}}  </a></td> 
+        <td><a href="grading_intake/GB/{{ item.id }}"> {{item.id}}  </a></td> 
         
         <td>{{ item.supplier }}</td>
 
