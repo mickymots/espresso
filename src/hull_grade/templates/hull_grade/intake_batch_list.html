@@ -1,0 +1,142 @@
+{% extends "homepage/base_template.html" %}
+
+
+{% block content %}
+ <h1> Hulling and Grading  </h1>
+
+<p>&nbsp;</p>
+<h3>Batches from Cherry Intake</h3>
+ 
+<table class="table">
+    <thead>
+    <tr>
+        <th> Intake ID </th>
+
+        <th>  Supplier </th>
+        
+        <th>  Location </th>
+
+        <th>  Full Bags  </th>
+
+        <th>  Partial Bag Weight </th>
+
+        <th>  Resting Period </th>
+
+        <th> Intake Date </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in inventory %}
+    <tr> 
+        <td><a href="grading_intake/CH/{{ item.id }}"> {{item.intake.id}}  </a></td> 
+        
+        <td>{{ item.intake.supplier_name|default_if_none:"Self"  }}</td>
+
+        <td>{{ item.intake.lot_location }}</td>
+        
+        <td>{{ item.full_bags  }}</td>
+
+        <td>{{ item.partial_bag_weight }}</td>
+
+        <td>{{ item.created_date |timesince }}</td>
+      
+
+        <td>{{ item.created_date }}</td>
+    
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+<h3>Batches from Parchment Intake</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> Intake ID </th>
+            
+            <th>  Supplier </th>
+    
+            <th>  Full Bags  </th>
+    
+            <th>  Partial Bag Weight </th>
+
+            <th>  Resting Period </th>
+    
+            <th>Intake Date</th>
+    
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in parchments %}
+        <tr> 
+            <td><a href="grading_intake/PH/{{ item.id }}"> {{item.id}}  </a></td> 
+            
+            <td>{{ item.supplier }}</td>
+    
+            <td>{{ item.total_bags_count  }}</td>
+            
+            <td>{{ item.total_weight }}</td>
+
+            <td>{{ item.resting_period }}</td>
+    
+            <td>{{ item.created_date }}</td>
+        
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+<h3>Batches from Green Beans Intake</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th> Intake ID </th>
+        
+        <th>  Supplier </th>
+
+        
+
+        <th>  Intake Type  </th>
+
+        <th>  GR1|GR2|GR3|GRPB|GRF </th>
+
+        <th>  Resting Period </th>
+
+        <th>Intake Date</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in green_beans %}
+    <tr> 
+        <td><a href="grading_intake_update/{{ item.id }}"> {{item.id}}  </a></td> 
+        
+        <td>{{ item.supplier }}</td>
+
+        
+
+        <td>{{ item.get_intake_type_display  }}</td>
+        
+        <td>{{ item.grade1_weight }} | {{ item.grade2_weight }} | {{ item.grade3_weight }} 
+
+            {{ item.grade_pb_weight }} | {{ item.grade_fines_weight }}
+
+
+        </td>
+
+        <td>{{ item.resting_period }}</td>
+
+        <td>{{ item.created_date }}</td>
+    
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

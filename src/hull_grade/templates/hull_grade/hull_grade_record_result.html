@@ -1,0 +1,118 @@
+{% extends "homepage/base_template.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h1 class="display-5">Record Hulling Grading Result </h1>
+{{ form.errors }}
+{{ form.media }}
+
+
+
+<table class="table table-primary table-bordered">
+    <tr>
+
+        <th> Batch Type</th>
+
+        <th>Intake ID </th>
+
+        <th> Supervisor</th>
+
+        <th> Full Bags</th>
+
+        <th> Partial Bags</th>
+
+        <th> Intake Date</th>
+
+    </tr>
+    <tr>
+
+        <td>{{intake_detail.batch_type}}</td>
+
+        <td>{{intake_detail.intake_id}}</td>
+
+        <td>{{intake_detail.supervisor_name}}</td>
+
+
+        <td> {{intake_detail.no_of_full_bags}}</td>
+
+
+        <td> {{intake_detail.partial_weight}} </td>
+
+       
+        <td>{{ intake_detail.created_date }}</td>
+
+    </tr>
+
+</table>
+
+
+<form method="post" enctype="multipart/form-data" class="form">
+
+
+
+    <div class="form-group">
+
+        <div>&nbsp;</div>
+
+        <div class="form-group row">
+            <div class="col">
+                {{ form.kgs_grade_1|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.kgs_grade_2|as_crispy_field }}
+            </div>
+        </div>
+
+        <div>&nbsp;</div>
+        <div class="form-group row">
+            <div class="col">
+                {{ form.kgs_grade_3|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.kgs_grade_pb|as_crispy_field }}
+            </div>
+        </div>
+
+        <div>&nbsp;</div>
+        <div class="form-group row">
+            <div class="col">
+                {{ form.kgs_grade_fines|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.kgs_grade_non_exp|as_crispy_field }}
+            </div>
+        </div>
+
+        <div>&nbsp;</div>
+        <div class="form-group row">
+            <div class="col">
+                {{ form.kgs_grade_trash|as_crispy_field }}
+            </div>
+
+            <div class="col">
+                {{ form.supervisor_name|as_crispy_field }}
+            </div>
+        </div>
+
+        <input type="hidden" value="{{intake_detail.id}}" name="hull_grade_intake" />
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col">
+                <input type="reset" value="Reset Form" class="btn btn-outline-secondary">
+            </div>
+            <div class="col">
+
+                <input type="submit" value="Submit" class="btn  btn-primary">
+            </div>
+        </div>
+        {% csrf_token %}
+    </div>
+
+</form>
+
+{% endblock %}

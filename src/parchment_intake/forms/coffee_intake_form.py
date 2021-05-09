@@ -29,28 +29,7 @@ class ParchmentIntakeForm(forms.ModelForm):
         labels = {
             "supervisor": "Supervisor Name",
             "supplier": "Supplier Name",
+            "total_weight": "Total weight(kgs)",
             "resting_period": "Enter number of weeks rested upon receipt",
-             "sample_result" :"From sample batch record the % of Grade 1 ((grade 1 / total batch)*100)"             
+            "sample_result" :"From sample batch record the % of Grade 1 ((grade 1 / total batch)*100)"             
         }
-       
-
-
-
-    #    supplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
-    
-    # total_bags_count = models.IntegerField()
-    # total_weight = models.IntegerField()
-    # moisture_content = models.FloatField(default=0.00)    
-    # sample_result = models.FloatField(default=0)    
-
-    # resting_period = models.IntegerField()
-    
-    # supervisor_signature = JSignatureField(null=True, blank=True)
-    
-    # delivery_person_name = models.CharField(max_length=60, null=True, blank=True)
-    # delivery_person_signature = JSignatureField(null=True, blank=True)
-
-    # created_date = models.DateField(default=timezone.now)
-
-    # signed_delivery_slip = models.FileField(upload_to=f'delivery-slips')
-    # delivery_person_pic = models.FileField(upload_to=f'delivery-persons')

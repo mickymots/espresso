@@ -1,0 +1,42 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+ <h1> Hulling and Grading In-progress</h1>
+ <p></p>
+
+ <table class="table">
+    <thead>
+    <tr>
+        <th>Batch Type</th>
+        
+        <th>Intake ID</th>
+
+        <th>Supervisor</th>
+
+        <th>Full Bags</th>
+
+        <th>Partial weight</th>
+
+        <th>Hull/Grade Start Date</th>
+        
+       
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in query_results %}
+    <tr> 
+        <td><a href="grading_result/{{ item.id }}"> {{item.batch_type}}  </a></td> 
+        
+        <td>{{ item.intake_id }}</td>
+        <td>{{ item.supervisor_name }}</td>
+        <td>{{ item.no_of_full_bags }}</td>
+        <td>{{ item.partial_weight }}</td>
+
+        <td>{{ item.created_date }}</td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+ 
+{% endblock %}
