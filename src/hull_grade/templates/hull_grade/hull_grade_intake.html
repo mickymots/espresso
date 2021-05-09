@@ -51,9 +51,35 @@
         {% else %}
 
         <h4> Intake ID : {{intake_detail.id}} </h4>
+        <table class="table table-primary table-bordered">
+            <tr>
+                <th> Supplier</th>
+
+                <th> Total Bags</th>
+
+                <th> Total Weight</th>
+
+                <th> Resting Period</th>
+
+                <th> Intake Date</th>
+
+            </tr>
+            <tr>
+
+                <td>{{intake_detail.supplier}}</td>
+
+                <td> {{intake_detail.total_bags_count}}</td>
+
+                <td> {{intake_detail.total_weight}} </td>
+
+                <td>{{ intake_detail.resting_period}}</td>
+
+                <td>{{ intake_detail.created_date }}</td>
+
+            </tr>
+
+        </table>
         {% endif %}
-
-
     </div>
 
     <p>
@@ -86,9 +112,13 @@
                 {{ form.no_of_full_bags|as_crispy_field }}
             </div>
 
+            {% if batch_type == 'CH' %}
             <div class="col">
                 {{ form.partial_weight|as_crispy_field }}
             </div>
+            {% else %}
+                <input type="hidden" value="0" name="partial_weight" />
+            {% endif %}
 
         </div>
 

@@ -28,5 +28,7 @@ class Migration(migrations.Migration):
                 ('hull_grade_intake', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='hull_grade.hullgradeintake')),
                 ('supervisor_name', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='beans_intake.employee')),
             ],
-        ),
+        ),migrations.RunSQL(
+           'ALTER SEQUENCE hull_grade_gradedbeans_id_seq RESTART WITH 9990000;'
+        )
     ]
