@@ -18,10 +18,10 @@ class OwnIntakeForm(forms.ModelForm):
     lot_location = forms.ModelChoiceField(label="Select lot location",
                                  queryset=Location.objects.all() , widget=forms.Select(attrs={'class':'form-control'}))
 
-    total_box_count= forms.IntegerField(label="Number of Boxes",
+    total_box_count= forms.FloatField(label="Number of Boxes",
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0)
-    passed_float_box_count = forms.IntegerField(label="Number of Passed Float Boxes", required = False,
+    passed_float_box_count = forms.FloatField(label="Number of Passed Float Boxes", required = False,
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0)
 
