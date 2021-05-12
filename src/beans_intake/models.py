@@ -48,8 +48,8 @@ class Intake(models.Model):
     supervisor_name = models.CharField(max_length=60)
     lot_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
     is_floated = models.BooleanField(default=False, blank=True, null=True)
-    total_box_count = models.IntegerField()
-    passed_float_box_count = models.IntegerField(default=0, null=True,blank=True )
+    total_box_count = models.FloatField()
+    passed_float_box_count = models.FloatField(default=0.00, null=True,blank=True)
     
     supervisor_signature = JSignatureField(null=True, blank=True)
     supplier_name = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
