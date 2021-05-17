@@ -29,6 +29,7 @@ class ParchmentIntakeForm(forms.ModelForm):
         labels = {
             "supervisor": "Supervisor Name",
             "supplier": "Supplier Name",
+            "total_bags_count": "Total bags of 25kgs + bag weight",
             "total_weight": "Total weight(kgs)",
             "resting_period": "Enter number of weeks rested upon receipt",
             "sample_result" :"From sample batch record the % of Grade 1 ((grade 1 / total batch)*100)"             
