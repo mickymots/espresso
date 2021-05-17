@@ -5,8 +5,8 @@ from django.utils import timezone
 # Create your models here.
 class HullGradeIntake(models.Model): 
     PARTIAL_SELECTION = (
-        (0,  'Partial Bag not picked up'),
-        (1, 'Partial Bag picked up'),
+        (0,  'Partial Bag not picked'),
+        (1, 'Partial Bag picked'),
     )
 
     batch_type =  models.CharField(max_length=2)

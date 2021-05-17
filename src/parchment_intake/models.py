@@ -10,7 +10,7 @@ class ParchmentIntake(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
     
     total_bags_count = models.IntegerField()
-    total_weight = models.IntegerField()
+    total_weight = models.FloatField()
     moisture_content = models.FloatField(default=0.00)    
     sample_result = models.FloatField(default=0)    
 

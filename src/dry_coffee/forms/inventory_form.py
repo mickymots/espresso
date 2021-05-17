@@ -10,7 +10,7 @@ class InvetoryForm(forms.ModelForm):
     supervisor_name = forms.ModelChoiceField(label="Supervisor Name",
                                  queryset=Employee.objects.all().filter(is_supervisor=True), widget=forms.Select(attrs={'class':'form-control'}))
 
-    full_bags_count= forms.IntegerField(label="Number of 25Kg Bags",
+    full_bags = forms.IntegerField(label="Number of 25Kg Bags",
                                   widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                   min_value = 0)
 
@@ -32,4 +32,7 @@ class InvetoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
         exclude = ('intake',)
-        fields = [ "supervisor_name", "full_bags_count", "partial_bag_weight", "moisture_content", "is_marker_placed", "proof_file" ]
+        fields = [ "supervisor_name", "full_bags", "partial_bag_weight", "moisture_content", "is_marker_placed", "proof_file" ]
+        labels = {
+            "full_bags": "Full bags count"
+        }
