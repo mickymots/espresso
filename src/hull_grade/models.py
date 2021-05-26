@@ -13,7 +13,7 @@ class HullGradeIntake(models.Model):
     intake_id = models.IntegerField()
     supervisor_name = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     no_of_full_bags  = models.FloatField(default=0.00, null=True, blank=True)
-    partial_weight = models.IntegerField(default=0, null=True, blank=True, max_length=1, choices=PARTIAL_SELECTION)
+    partial_weight = models.FloatField(default=0, null=True, blank=True, max_length=1, choices=PARTIAL_SELECTION)
     hulled_graded = models.BooleanField(default=False)
     created_date = models.DateField(default=timezone.now)
 

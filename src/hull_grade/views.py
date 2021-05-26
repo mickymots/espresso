@@ -16,6 +16,8 @@ from hull_grade.forms.green_beans_intake_update_form import GreenBeansIntakeUpda
 
 from green_beans_intake.forms.green_beans_intake_form import GreenBeansIntakeForm
 from green_beans_intake.models import GreenBeansIntake, GreenBeansIntakeFiles
+from hull_grade.forms.hull_grade_intake_form import getHullGradeIntakes
+
 
 intake_details_template = 'intake_details.html/'
 
@@ -147,10 +149,17 @@ def get_intake_form(request, batch_type, intake_id):
            
     else:
         intake_detail = getIntakeDetail(batch_type, intake_id)
+        hull_graded_details = getHullGradeIntakes(intake_id)
+        if hull_graded_details:
+            total_hulled_graded_bags,partial_intake_exists = hull_graded_details
+            context['total_hulled_graded_bags'] = total_hulled_graded_bags
+            context['partial_intake_exists'] = partial_intake_exists
         # total_full_bags = get_bags_count(batch_type, intake_details)
         # Create new form
         context['intake_detail'] = intake_detail
         context['batch_type'] = batch_type
+        
+
 
         context['form'] = HullGradeIntakeForm(initial={'batch_type': batch_type, 'intake_id': intake_id})
         

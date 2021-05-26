@@ -22,7 +22,11 @@
 
                 <th> Full Bags</th>
 
-                <th> Partial Bags</th>
+                <th> Partial Bag weight (kgs)</th>
+
+                <th> Graded Bags</th>
+
+                <th> Partial Bag graded?</th>
 
                 <th> Resting Period</th>
 
@@ -40,6 +44,12 @@
 
 
                 <td> {{intake_detail.partial_bag_weight}} </td>
+
+                <td> {{total_hulled_graded_bags| default:"0.0"}} </td>
+
+
+                <td> {{partial_intake_exists| yesno:'Yes, No'}} </td>
+
 
                 <td>{{ intake_detail.created_date |timesince }}</td>
 

@@ -1,0 +1,151 @@
+{% extends "homepage/base_template.html" %}
+{% load crispy_forms_tags %}
+{% load jsignature_filters %}
+
+<div class="container-fluid">
+    {% block content %}
+
+    <h1> Parchment Intake ID - {{intake.id}} </h1>
+    <p> </p>
+    <p> </p>
+
+
+    <fieldset disabled>
+
+
+        <div class="row">
+
+            <div class="col-lg-6 ">
+                <label for="name">Supervisor Name</label>
+                <input type="text" class="form-control" value="{{intake.supervisor}}" placeholder="Supervisor name"
+                    id="name" aria-label="Supervisor name" />
+            </div>
+            <div class="col-lg-6">
+                <label for="supplier">Supplier</label>
+                <input type="text" class="form-control" value="{{intake.supplier}}" placeholder="supplier" id="supplier"
+                    aria-label="supplier">
+            </div>
+        </div>
+
+        <div>&nbsp;</div>
+        <div class="row">
+
+            <div class="col">
+                <label for="intake_date">Number of weeks rested upon receipt</label>
+                <input type="text" class="form-control" value="{{intake.resting_period}}" placeholder="Intake Date"
+                    id="intake_date" aria-label="Intake Date">
+            </div>
+            <div class="col">
+                <label for="box_count">Total Bags Count </label>
+                <input type="text" class="form-control" value="{{intake.total_bags_count}}" placeholder="Box Count"
+                    id="box_count" aria-label="Box Count">
+            </div>
+            <div class="col">
+                <label for="box_count">Total Weight KGS</label>
+                <input type="text" class="form-control" value="{{intake.total_weight}}" placeholder="Box Count"
+                    id="box_count" aria-label="Box Count">
+            </div>
+            <div class="col">
+                <label for="box_count">Moisture Content </label>
+                <input type="text" class="form-control" value="{{intake.moisture_content}}" placeholder="Box Count"
+                    id="box_count" aria-label="Box Count">
+            </div>
+        </div>
+
+
+        <div>&nbsp;</div>
+        <div class="row">
+
+            <div class="col">
+                <label for="intake_date">Intake Date</label>
+                <input type="text" class="form-control" value="{{intake.created_date}}" placeholder="Intake Date"
+                    id="intake_date" aria-label="Intake Date">
+            </div>
+
+            <div class="col">
+                <label for="Delivery_Person">Delivery Person </label>
+                <input type="text" class="form-control" value="{{intake.delivery_person_name}}" placeholder="Box Count"
+                    id="Delivery_Person" aria-label="Delivery Person">
+            </div>
+        </div>
+
+
+        <div>&nbsp;</div>
+        <div class="row">
+
+            <div class="col">
+                <label for="intake_note">Intake Note</label>
+                <input type="text" class="form-control" value="{{intake.intake_note}}" placeholder="Intake Note"
+                    id="intake_date" aria-label="Intake Note">
+            </div>
+
+        </div>
+
+
+        <div>&nbsp;</div>
+        <div class="row">
+
+
+            <div class="col">
+                <label for="box_count">Supervisor signature </label>
+                <img class="img-fluid img-thumbnail rounded d-block" id="signature"
+                    src="{{ intake.supervisor_signature|signature_base64 }}" height="50" width="250"
+                    alt="Supervisor signature" />
+
+
+            </div>
+            <div class="col">
+                <label for="signature">Delivery Person Signature </label>
+                <img class="img-fluid img-thumbnail rounded d-block" id="signature"
+                    src="{{ intake.delivery_person_signature|signature_base64 }}" height="50" width="250"
+                    alt="Supervisor signature" />
+
+            </div>
+
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <h6> Delivery Slip</h6>
+                <img class="img-fluid img-thumbnail rounded d-block" id="delivery_person_pic"
+                    src="{{MEDIA_URL}}{{ intake.signed_delivery_slip }}" alt="Delviery Slip" />
+            </div>
+
+
+            <div class="col-md-6">
+                <h6> Delivery Person Pic </h6>
+                <img class="img-fluid img-thumbnail rounded d-block" id="delivery_person_pic"
+                    src="{{MEDIA_URL}}{{ intake.delivery_person_pic }}" alt="Delviery Person" />
+            </div>
+
+        </div>
+        <div>&nbsp;</div>
+
+        <div class="row">
+            <div class="col-md-6">
+            <h6> Delivery Proof Files </h6>
+            {% for ifile in uploaded_files %}
+            <a href="{{MEDIA_URL}}{{ ifile.proof_file }}" target="_blank"> {{ ifile.proof_file }} </a>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+            <div class="col">
+                <h6>Have you added ID number to batch?</h6>
+                {{ intake.marker_placed| yesno:'Yes, No' }}
+            </div>
+         
+        </div>
+        </div>
+
+    </fieldset>
+
+    <div class="col-3">
+        <a href="/reports/{{batch_status}}" class="btn btn-outline-primary btn-lg">Back</a>
+    </div>
+    {% endblock %}
+
+</div>

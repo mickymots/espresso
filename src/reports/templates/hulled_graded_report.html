@@ -1,0 +1,63 @@
+{% extends "homepage/base_template.html" %}
+
+{% block content %}
+<h1> {{header}} </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Intake ID</th>
+
+            <th>Batch type</th>
+
+            <th>Hull/Grade Date</th>
+
+            <th>Grade 1 (kg)</th>
+
+            <th>Grade 2(kg)</th>
+
+            <th>Grade 3(kg)</th>
+
+            <th>Grade PB(kg)</th>
+
+            <th>Grade Fines(kg)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in query_results %}
+        <tr>
+            {% if item.hull_grade_intake.batch_type  == 'CH' %}
+            <td><a href="/reports/GRADED/{{ item.hull_grade_intake.intake_id }}"> {{item.hull_grade_intake.intake_id}} </a></td>
+            {% else %}
+
+            <td><a href="/reports/PH_GRADED/{{ item.hull_grade_intake.intake_id }}"> {{item.hull_grade_intake.intake_id}} </a></td>
+            {% endif %}
+
+            <td>{{ item.hull_grade_intake.batch_type }}</td>
+
+            <td>{{ item.created_date }}</td>
+
+
+            <td>{{ item.kgs_grade_1}}</td>
+
+            <td>{{ item.kgs_grade_1}}</td>
+
+
+            <td>{{ item.kgs_grade_1}}</td>
+
+
+            <td>{{ item.kgs_grade_1}}</td>
+
+            <td>{{ item.kgs_grade_1}}</td>
+
+
+           
+        </tr>
+
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
