@@ -4,6 +4,6 @@ from beans_intake.models import Intake
 
 def index(request):
     context = {}
-    query_results = Intake.objects.all()
+    query_results = Intake.objects.all().order_by('id')
     context['query_results'] =  query_results
     return render(request, 'homepage/index.html', context=context)

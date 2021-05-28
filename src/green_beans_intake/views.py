@@ -15,7 +15,7 @@ green_beans_details_template = 'green_beans_intake/green_beans_intake_details.ht
 def index(request):
 
     context = {}
-    query_results = GreenBeansIntake.objects.all()
+    query_results = GreenBeansIntake.objects.all().order_by('id')
     context['query_results'] =  query_results
     return render(request, 'green_beans_intake/index.html', context=context)
 

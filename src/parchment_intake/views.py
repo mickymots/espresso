@@ -14,7 +14,7 @@ parchment_intake_details_template = 'parchment_intake/parchment_intake_details.h
 def index(request):
 
     context = {}
-    query_results = ParchmentIntake.objects.all()
+    query_results = ParchmentIntake.objects.all().order_by('id')
     context['query_results'] =  query_results
     return render(request, 'parchment_intake/index.html', context=context)
 

@@ -27,7 +27,7 @@ def index(request):
 def get_batch_with_status(request, batch_status):
     template = 'batch_list.html'
     context = {}
-    query_results = IntakeDetails.objects.all().filter(is_active_status=True)
+    query_results = IntakeDetails.objects.all().order_by('intake').filter(is_active_status=True)
     
     status = None
             
@@ -36,8 +36,9 @@ def get_batch_with_status(request, batch_status):
 
     elif batch_status == 'RESTING':
         status = Status.objects.get(pk=BATCH_STATUS_RESTING)
+
     elif 'GRADED' in batch_status:
-        query_results = GradedBeans.objects.all()
+        query_results = GradedBeans.objects.all().order_by('hull_grade_intake')
         template = 'hulled_graded_report.html'
     
     if status:
@@ -56,7 +57,7 @@ def get_intake_details(request, batch_status, intake_id):
         
         if batch_status == 'PH_GRADED':
             intake = ParchmentIntake.objects.get(pk=intake_id)
-            uploaded_files = ParchmentIntakeFiles.objects.all().filter(intake=intake)
+            uploaded_files = ParchmentIntakeFiles.objects.all().order_by('id').filter(intake=intake)
             return render(request, parchment_intake_details_template, {'intake': intake, 'uploaded_files': uploaded_files, 'batch_status':batch_status})
 
         elif batch_status == 'GRADED':

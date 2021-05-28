@@ -51,3 +51,4 @@ class OwnIntakeForm(forms.ModelForm):
         fields = [
                 "supervisor_name", "lot_location", "total_box_count", "passed_float_box_count" , "is_floated", "supervisor_signature","proof_file",
         ]
+        ordering = ['id']
