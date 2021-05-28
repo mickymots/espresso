@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.admin import options
 
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget

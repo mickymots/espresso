@@ -36,3 +36,4 @@ class InvetoryForm(forms.ModelForm):
         labels = {
             "full_bags": "Full bags count"
         }
+        

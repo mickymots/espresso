@@ -15,6 +15,8 @@ class HullGradeResultForm(forms.ModelForm):
         model = GradedBeans
         exclude = ['created_date']
         labels = {}
+        ordering = ['id']
+
 
 
 

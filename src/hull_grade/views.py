@@ -24,7 +24,7 @@ intake_details_template = 'intake_details.html/'
 def get_dashboard(request):
     context = {}
 
-    query_results = HullGradeIntake.objects.filter(hulled_graded=False)
+    query_results = HullGradeIntake.objects.filter(hulled_graded=False).order_by('id')
     context['query_results'] = query_results
  
     return render(request, 'hull_grade/hull_grade_dashboard.html', context=context)
