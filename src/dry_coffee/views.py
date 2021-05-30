@@ -17,7 +17,7 @@ from beans_intake.views import BATCH_STATUS_DRYING, BATCH_STATUS_INTAKE, BATCH_S
 def index(request):
     template = 'dry_coffee/index.html'
     context = {}
-    query_results = IntakeDetails.objects.all().order_by('id').filter(status__in=Status.objects.filter(
+    query_results = IntakeDetails.objects.all().order_by('intake').filter(status__in=Status.objects.filter(
         id__in=[BATCH_STATUS_INTAKE, BATCH_STATUS_DRYING])).filter(is_active_status=True)
 
     context['query_results'] = query_results
@@ -46,9 +46,6 @@ def processDrying(request, intake):
                                             intake_details),
                                         marker_placed=is_marker_placed
                                         )
-
-
-
     intake_details.save()
     new_intake_details.save()
     return 'DRYING'
