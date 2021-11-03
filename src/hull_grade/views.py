@@ -84,10 +84,16 @@ def get_inventory():
             total_hulled_graded_bags,partial_intake_exists = hull_grade_intakes
             
             full_bags_graded = intake.full_bags == total_hulled_graded_bags
-            partial_bag_graded = intake.partial_bag_weight > 0 and partial_intake_exists
+
             
-            if not (full_bags_graded and partial_bag_graded):
-                result.append(intake)
+            if intake.partial_bag_weight:
+                partial_bag_graded = intake.partial_bag_weight > 0 and partial_intake_exists
+            
+                if not (full_bags_graded and partial_bag_graded):
+                    result.append(intake)
+            else:
+                if not full_bags_graded:
+                    result.append(intake)
         else:
             result.append(intake)
     return result
